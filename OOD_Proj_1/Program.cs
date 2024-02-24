@@ -1,7 +1,4 @@
-﻿using OOD_Proj_1;
-using System.Reflection.Metadata.Ecma335;
-
-namespace OOD_Proj_1
+﻿namespace OOD_Proj_1
 {
     public class GetData
     {

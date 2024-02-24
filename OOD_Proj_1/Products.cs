@@ -1,7 +1,4 @@
 ﻿using System.Globalization;
-using System.Linq;
-using System.Numerics;
-using System.Text.RegularExpressions;
 
 namespace OOD_Proj_1
 {
@@ -26,7 +23,6 @@ namespace OOD_Proj_1
     public abstract class Product
     {
         readonly protected CultureInfo culture = CultureInfo.InvariantCulture;
-        protected Product() { }
     }
     internal class CargoPlane : Product
     {
