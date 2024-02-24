@@ -1,32 +1,26 @@
 ﻿using System.Globalization;
 using System.Linq;
+using System.Numerics;
 using System.Text.RegularExpressions;
 
 namespace OOD_Proj_1
 {
     class Factory
     {
+        Dictionary<string, Generator> generators = new Dictionary<string, Generator>()
+        {
+            {"C", new CrewGenerator() },
+            {"P", new PassangerGenerator() },
+            {"CA", new CargoGenerator() },
+            {"CP", new CargoPlaneGenerator() },
+            {"PP", new PassangerPlaneGenerator() },
+            {"AI", new AirportGenerator() },
+            {"FL", new FlightGenerator() },
+        };
         public Product Create(string txt)
         {
             string[] words = txt.Split(',');
-            switch (words[0])
-            {
-                case ("C"):
-                    return new Crew(txt);
-                case ("P"):
-                    return new Passanger(txt);
-                case ("CA"):
-                    return new Cargo(txt);
-                case ("CP"):
-                    return new CargoPlane(txt);
-                case ("PP"):
-                    return new PassangerPlane(txt);
-                case ("AI"):
-                    return new Airport(txt);
-                case ("FL"):
-                    return new Fligth(txt);
-            }
-            return null;
+            return generators[words[0]].Create(txt);
         }
     }
     public abstract class Product
