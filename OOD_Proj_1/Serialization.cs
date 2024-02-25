@@ -9,7 +9,24 @@ namespace OOD_Proj_1
 {
     public class SerializeData
     {
-        public void JsonSerialization(List<Product> products)
+        Settings settings = new Settings();
+        Dictionary<string, Serializator> serializators = new Dictionary<string, Serializator>()
+        {
+            { "JSON", new JsonSerializator() },
+        };
+        public void Serialize(List<Product> products)
+        {
+            serializators[settings.SerializationType].Serialize(products);
+        }
+    }
+    public abstract class Serializator
+    {
+        abstract public void Serialize(List<Product> products);
+    }
+
+    public class JsonSerializator : Serializator
+    {
+        public override void Serialize(List<Product> products)
         {
             var options = new JsonSerializerOptions
             {

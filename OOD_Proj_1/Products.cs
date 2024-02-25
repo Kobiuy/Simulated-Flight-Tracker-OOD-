@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace OOD_Proj_1
 {
-    class Factory
+    public class Factory
     {
         Dictionary<string, Generator> generators = new Dictionary<string, Generator>()
         {

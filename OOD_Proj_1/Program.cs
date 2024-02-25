@@ -14,11 +14,11 @@ namespace OOD_Proj_1
         static void Main(string[] args)
         {
             Settings settings = new Settings();
-            GetData getdata = new GetData();
-            SerializeData serialize = new SerializeData();
+            DataImporter importer = new DataImporter();
+            SerializeData serializator = new SerializeData();
             List<Product> products;
-            products = getdata.FromTextFile(settings.FileName);
-            serialize.JsonSerialization(products);
+            products = importer.ImportData();
+            serializator.Serialize(products);
         }
     }
 }
