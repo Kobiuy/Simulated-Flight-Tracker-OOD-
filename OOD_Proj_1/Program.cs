@@ -31,7 +31,7 @@
             string FileName = "example_data.ftr";
             GetData getdata = new GetData();
             products = getdata.FromTextFile(FileName);
-            foreach (Product p in products) { Console.WriteLine(p); }
+            foreach (Product p in products) { Console.WriteLine(p.Type); }
         }
     }
 }

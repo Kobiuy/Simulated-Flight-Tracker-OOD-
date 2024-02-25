@@ -22,11 +22,12 @@ namespace OOD_Proj_1
     }
     public abstract class Product
     {
+        public string Type;
+        public UInt64 ID;
         readonly protected CultureInfo culture = CultureInfo.InvariantCulture;
     }
     internal class CargoPlane : Product
     {
-        public UInt64 ID;
         string Serial;
         string Country;
         string Model;
@@ -35,6 +36,7 @@ namespace OOD_Proj_1
         public CargoPlane(string txt)
         {
             string[] words = txt.Split(",");
+            Type = words[0];
             ID = UInt64.Parse(words[1]);
             Serial = words[2];
             Country = words[3];
@@ -44,7 +46,6 @@ namespace OOD_Proj_1
     }
     internal class PassangerPlane : Product
     {
-        public UInt64 ID;
         string Serial;
         string Country;
         string Model;
@@ -55,6 +56,7 @@ namespace OOD_Proj_1
         public PassangerPlane(string txt)
         {
             string[] words = txt.Split(",");
+            Type = words[0];
             ID = UInt64.Parse(words[1]);
             Serial = words[2];
             Country = words[3];
@@ -66,7 +68,6 @@ namespace OOD_Proj_1
     }
     internal class Passanger : Product
     {
-        public UInt64 ID;
         string Name;
         UInt64 Age;
         string Phone;
@@ -77,6 +78,7 @@ namespace OOD_Proj_1
         public Passanger(string txt)
         {
             string[] words = txt.Split(",");
+            Type = words[0];
             ID = UInt64.Parse(words[1]);
             Name = words[2];
             Age = UInt64.Parse(words[3]);
@@ -88,7 +90,6 @@ namespace OOD_Proj_1
     }
     internal class Crew : Product
     {
-        public UInt64 ID;
         string Name;
         UInt64 Age;
         string Phone;
@@ -98,6 +99,7 @@ namespace OOD_Proj_1
         public Crew(string txt)
         {
             string[] words = txt.Split(",");
+            Type = words[0];
             ID = UInt64.Parse(words[1]);
             Name = words[2];
             Age = UInt64.Parse(words[3]);
@@ -109,13 +111,13 @@ namespace OOD_Proj_1
     }
     internal class Cargo : Product
     {
-        public UInt64 ID;
         Single Weight;
         string Code;
         string Description;
         public Cargo(string txt)
         {
             string[] words = txt.Split(",");
+            Type = words[0];
             ID = UInt64.Parse(words[1]);
             Weight = Single.Parse(words[2], culture);
             Code = words[3];
@@ -126,7 +128,6 @@ namespace OOD_Proj_1
 
     internal class Airport : Product
     {
-        public UInt64 ID;
         string Name;
         string Code;
         Single Longitude;
@@ -136,6 +137,7 @@ namespace OOD_Proj_1
         public Airport(string txt)
         {
             string[] words = txt.Split(",");
+            Type = words[0];
             ID = UInt64.Parse(words[1]);
             Name = words[2];
             Code = words[3];
@@ -147,7 +149,6 @@ namespace OOD_Proj_1
     }
     internal class Fligth : Product
     {
-        public UInt64 ID;
         UInt64 OriginAsID;
         UInt64 TargetAsID;
         string TakeOffTime;
@@ -160,8 +161,8 @@ namespace OOD_Proj_1
         List<UInt64> LoadAsIDs = new List<UInt64>();
         public Fligth(string txt)
         {
-            int i = 9; //Index of the first CrewID
             string[] words = txt.Split(",");
+            Type = words[0];
             ID = UInt64.Parse(words[1]);
             OriginAsID = UInt64.Parse(words[2]);
             TargetAsID = UInt64.Parse(words[3]);
