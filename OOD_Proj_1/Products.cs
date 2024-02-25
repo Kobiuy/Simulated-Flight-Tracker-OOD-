@@ -17,7 +17,7 @@ namespace OOD_Proj_1
         public Product Create(string txt)
         {
             string[] words = txt.Split(',');
-            return generators[words[0]].Create(txt);
+            return generators[words[0]].Create(words);
         }
     }
     public abstract class Product
@@ -33,9 +33,8 @@ namespace OOD_Proj_1
         string Model;
         Single MaxLoad;
 
-        public CargoPlane(string txt)
+        public CargoPlane(string[] words)
         {
-            string[] words = txt.Split(",");
             Type = words[0];
             ID = UInt64.Parse(words[1]);
             Serial = words[2];
@@ -53,9 +52,8 @@ namespace OOD_Proj_1
         UInt16 BusinessClassSize;
         UInt16 EconomyClassSize;
 
-        public PassangerPlane(string txt)
+        public PassangerPlane(string[] words)
         {
-            string[] words = txt.Split(",");
             Type = words[0];
             ID = UInt64.Parse(words[1]);
             Serial = words[2];
@@ -75,9 +73,8 @@ namespace OOD_Proj_1
         string Class;
         UInt64 Miles;
 
-        public Passanger(string txt)
+        public Passanger(string[] words)
         {
-            string[] words = txt.Split(",");
             Type = words[0];
             ID = UInt64.Parse(words[1]);
             Name = words[2];
@@ -96,9 +93,8 @@ namespace OOD_Proj_1
         string Email;
         UInt16 Practice;
         string Role;
-        public Crew(string txt)
+        public Crew(string[] words)
         {
-            string[] words = txt.Split(",");
             Type = words[0];
             ID = UInt64.Parse(words[1]);
             Name = words[2];
@@ -114,9 +110,8 @@ namespace OOD_Proj_1
         Single Weight;
         string Code;
         string Description;
-        public Cargo(string txt)
+        public Cargo(string[] words)
         {
-            string[] words = txt.Split(",");
             Type = words[0];
             ID = UInt64.Parse(words[1]);
             Weight = Single.Parse(words[2], culture);
@@ -134,9 +129,8 @@ namespace OOD_Proj_1
         Single Latitude;
         Single AMSL;
         string Country;
-        public Airport(string txt)
+        public Airport(string[] words)
         {
-            string[] words = txt.Split(",");
             Type = words[0];
             ID = UInt64.Parse(words[1]);
             Name = words[2];
@@ -159,9 +153,8 @@ namespace OOD_Proj_1
         UInt64 PlaneID;
         List<UInt64>CrewAsIDs = new List<UInt64>();
         List<UInt64> LoadAsIDs = new List<UInt64>();
-        public Fligth(string txt)
+        public Fligth(string[] words)
         {
-            string[] words = txt.Split(",");
             Type = words[0];
             ID = UInt64.Parse(words[1]);
             OriginAsID = UInt64.Parse(words[2]);

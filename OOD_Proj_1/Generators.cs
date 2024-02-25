@@ -2,55 +2,55 @@
 {
     abstract class Generator
     {
-        abstract public Product Create(string txt);
+        abstract public Product Create(string[] words);
     }
     class PassangerPlaneGenerator : Generator
     {
-        public override PassangerPlane Create(string txt)
+        public override PassangerPlane Create(string[] words)
         {
-            return new PassangerPlane(txt);
+            return new PassangerPlane(words);
         }
     }
     class CargoPlaneGenerator : Generator
     {
-        public override CargoPlane Create(string txt)
+        public override CargoPlane Create(string[] words)
         {
-            return new CargoPlane(txt);
+            return new CargoPlane(words);
         }
     }
     class PassangerGenerator : Generator
     {
-        public override Passanger Create(string txt)
+        public override Passanger Create(string[] words)
         {
-            return new Passanger(txt);
+            return new Passanger(words);
         }
     }
     class CrewGenerator : Generator
     {
-        public override Crew Create(string txt)
+        public override Crew Create(string[] words)
         {
-            return new Crew(txt);
+            return new Crew(words);
         }
     }
     class CargoGenerator : Generator
     {
-        public override Cargo Create(string txt)
+        public override Cargo Create(string[] words)
         {
-            return new Cargo(txt);
+            return new Cargo(words);
         }
     }
     class AirportGenerator : Generator
     {
-        public override Airport Create(string txt)
+        public override Airport Create(string[] words)
         {
-            return new Airport(txt);
+            return new Airport(words);
         }
     }
     class FlightGenerator : Generator
     {
-        public override Fligth Create(string txt)
+        public override Fligth Create(string[] words)
         {
-            return new Fligth(txt);
+            return new Fligth(words);
         }
     }
 }
