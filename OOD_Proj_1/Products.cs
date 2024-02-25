@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Text.Json.Serialization;
 
 namespace OOD_Proj_1
 {
@@ -7,10 +8,10 @@ namespace OOD_Proj_1
         Dictionary<string, Generator> generators = new Dictionary<string, Generator>()
         {
             {"C", new CrewGenerator() },
-            {"P", new PassangerGenerator() },
+            {"P", new PassengerGenerator() },
             {"CA", new CargoGenerator() },
             {"CP", new CargoPlaneGenerator() },
-            {"PP", new PassangerPlaneGenerator() },
+            {"PP", new PassengerPlaneGenerator() },
             {"AI", new AirportGenerator() },
             {"FL", new FlightGenerator() },
         };
@@ -20,18 +21,25 @@ namespace OOD_Proj_1
             return generators[words[0]].Create(words);
         }
     }
+    [JsonDerivedType(typeof(CargoPlane), 0)]
+    [JsonDerivedType(typeof(PassengerPlane), 1)]
+    [JsonDerivedType(typeof(Passenger), 2)]
+    [JsonDerivedType(typeof(Crew), 3)]
+    [JsonDerivedType(typeof(Cargo), 4)]
+    [JsonDerivedType(typeof(Airport), 5)]
+    [JsonDerivedType(typeof(Fligth), 6)]
     public abstract class Product
     {
-        public string Type;
-        public UInt64 ID;
+        public string Type {  get; set; }
+        public UInt64 ID {  get; set; }
         readonly protected CultureInfo culture = CultureInfo.InvariantCulture;
     }
-    internal class CargoPlane : Product
+    public class CargoPlane : Product
     {
-        string Serial;
-        string Country;
-        string Model;
-        Single MaxLoad;
+        public string Serial {  get; set; }
+        public string Country { get; set; }
+        public string Model { get; set; }
+        public Single MaxLoad;
 
         public CargoPlane(string[] words)
         {
@@ -43,16 +51,16 @@ namespace OOD_Proj_1
             MaxLoad = Single.Parse(words[5], culture);
         }
     }
-    internal class PassangerPlane : Product
+    public class PassengerPlane : Product
     {
-        string Serial;
-        string Country;
-        string Model;
-        UInt16 FirstClassSize;
-        UInt16 BusinessClassSize;
-        UInt16 EconomyClassSize;
+        public string Serial { get; set; }
+        public string Country { get; set; }
+        public string Model { get; set; }
+        public UInt16 FirstClassSize { get; set; }
+        public UInt16 BusinessClassSize { get; set; }
+        public UInt16 EconomyClassSize { get; set; }
 
-        public PassangerPlane(string[] words)
+        public PassengerPlane(string[] words)
         {
             Type = words[0];
             ID = UInt64.Parse(words[1]);
@@ -64,16 +72,16 @@ namespace OOD_Proj_1
             EconomyClassSize = UInt16.Parse(words[7]);
         }
     }
-    internal class Passanger : Product
+    public class Passenger : Product
     {
-        string Name;
-        UInt64 Age;
-        string Phone;
-        string Email;
-        string Class;
-        UInt64 Miles;
+        public string Name { get; set; }
+        public UInt64 Age { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public string Class { get; set; }
+        public UInt64 Miles { get; set; }
 
-        public Passanger(string[] words)
+        public Passenger(string[] words)
         {
             Type = words[0];
             ID = UInt64.Parse(words[1]);
@@ -85,14 +93,14 @@ namespace OOD_Proj_1
             Miles = UInt64.Parse(words[7]);
         }
     }
-    internal class Crew : Product
+    public class Crew : Product
     {
-        string Name;
-        UInt64 Age;
-        string Phone;
-        string Email;
-        UInt16 Practice;
-        string Role;
+        public string Name { get; set; }
+        public UInt64 Age { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public UInt16 Practice { get; set; }
+        public string Role { get; set; }
         public Crew(string[] words)
         {
             Type = words[0];
@@ -105,11 +113,11 @@ namespace OOD_Proj_1
             Role = words[7];
         }
     }
-    internal class Cargo : Product
+    public class Cargo : Product
     {
-        Single Weight;
-        string Code;
-        string Description;
+        public Single Weight { get; set; }
+        public string Code { get; set; }
+        public string Description { get; set; }
         public Cargo(string[] words)
         {
             Type = words[0];
@@ -121,14 +129,14 @@ namespace OOD_Proj_1
 
     }
 
-    internal class Airport : Product
+    public class Airport : Product
     {
-        string Name;
-        string Code;
-        Single Longitude;
-        Single Latitude;
-        Single AMSL;
-        string Country;
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public Single Longitude { get; set; }
+        public Single Latitude { get; set; }
+        public Single AMSL { get; set; }
+        public string Country { get; set; }
         public Airport(string[] words)
         {
             Type = words[0];
@@ -141,18 +149,18 @@ namespace OOD_Proj_1
             Country = words[7];
         }
     }
-    internal class Fligth : Product
+    public class Fligth : Product
     {
-        UInt64 OriginAsID;
-        UInt64 TargetAsID;
-        string TakeOffTime;
-        string LandingTime;
-        Single Longitude;
-        Single Latitude;
-        Single AMSL;
-        UInt64 PlaneID;
-        List<UInt64>CrewAsIDs = new List<UInt64>();
-        List<UInt64> LoadAsIDs = new List<UInt64>();
+        public UInt64 OriginAsID { get; set; }
+        public UInt64 TargetAsID { get; set; }
+        public string TakeOffTime { get; set; }
+        public string LandingTime { get; set; }
+        public Single Longitude { get; set; }
+        public Single Latitude { get; set; }
+        public Single AMSL { get; set; }
+        public UInt64 PlaneID { get; set; }
+        public List<UInt64>CrewAsIDs = new List<UInt64>();
+        public List<UInt64> LoadAsIDs = new List<UInt64>();
         public Fligth(string[] words)
         {
             Type = words[0];
@@ -173,7 +181,7 @@ namespace OOD_Proj_1
             string[] LoadIDs = words[11].Replace('[', ' ').Replace(']', ' ').Trim().Split(';');
             foreach (string LoadID in LoadIDs)
             {
-                LoadAsIDs.Append(UInt64.Parse(LoadID));
+                LoadAsIDs.Add(UInt64.Parse(LoadID));
             }
         }
     }

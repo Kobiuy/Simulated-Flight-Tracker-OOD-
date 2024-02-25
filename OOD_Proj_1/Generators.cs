@@ -4,11 +4,11 @@
     {
         abstract public Product Create(string[] words);
     }
-    class PassangerPlaneGenerator : Generator
+    class PassengerPlaneGenerator : Generator
     {
-        public override PassangerPlane Create(string[] words)
+        public override PassengerPlane Create(string[] words)
         {
-            return new PassangerPlane(words);
+            return new PassengerPlane(words);
         }
     }
     class CargoPlaneGenerator : Generator
@@ -18,11 +18,11 @@
             return new CargoPlane(words);
         }
     }
-    class PassangerGenerator : Generator
+    class PassengerGenerator : Generator
     {
-        public override Passanger Create(string[] words)
+        public override Passenger Create(string[] words)
         {
-            return new Passanger(words);
+            return new Passenger(words);
         }
     }
     class CrewGenerator : Generator
