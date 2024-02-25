@@ -30,13 +30,13 @@ namespace OOD_Proj_1
     [JsonDerivedType(typeof(Fligth), 6)]
     public abstract class Product
     {
-        public string Type {  get; set; }
-        public UInt64 ID {  get; set; }
+        public string Type { get; set; }
+        public UInt64 ID { get; set; }
         readonly protected CultureInfo culture = CultureInfo.InvariantCulture;
     }
     public class CargoPlane : Product
     {
-        public string Serial {  get; set; }
+        public string Serial { get; set; }
         public string Country { get; set; }
         public string Model { get; set; }
         public Single MaxLoad;
@@ -159,7 +159,7 @@ namespace OOD_Proj_1
         public Single Latitude { get; set; }
         public Single AMSL { get; set; }
         public UInt64 PlaneID { get; set; }
-        public List<UInt64>CrewAsIDs = new List<UInt64>();
+        public List<UInt64> CrewAsIDs = new List<UInt64>();
         public List<UInt64> LoadAsIDs = new List<UInt64>();
         public Fligth(string[] words)
         {
@@ -171,7 +171,7 @@ namespace OOD_Proj_1
             LandingTime = words[5];
             Longitude = Single.Parse(words[6], culture);
             Latitude = Single.Parse(words[7], culture);
-            AMSL= Single.Parse(words[8],culture);
+            AMSL = Single.Parse(words[8], culture);
             PlaneID = UInt64.Parse(words[9]);
             string[] crewIDs = words[10].Replace('[', ' ').Replace(']', ' ').Trim().Split(';');
             foreach (string member in crewIDs)

@@ -2,58 +2,22 @@
 
 namespace OOD_Proj_1
 {
-    public class GetData
+    public class Settings
     {
-        Factory factory = new();
-        public List<Product> FromTextFile(string FileName)
-        {
-            List<Product> products = new List<Product>();
-            try
-            {
-                using (var sr = new StreamReader(FileName))
-                {
-                    while(!sr.EndOfStream)
-                    {
-                        products.Add(factory.Create(sr.ReadLine()));
-                    }
-                }
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return products;
-        }
+        public string SerializationType = "JSON";
+        public string DataSource = "FILE";
+        public string FileName = "example_data.ftr";
     }
-    public class SerializeData
-    {
-        public void JsonSerialization(List<Product> products)
-        {
-            var options = new JsonSerializerOptions
-            {
-                IncludeFields = true,
-            };
-            string s;
-            using (var sw = new StreamWriter("Products.json"))
-            {
-                foreach (Product p in products)
-                {
-                    s = JsonSerializer.Serialize(p, options);
-                    sw.WriteLine(s);
-                }
-            }
-        }
-    }
+
     internal class Program
     {
         static void Main(string[] args)
         {
-            List<Product> products;
-            string FileName = "example_data.ftr";
+            Settings settings = new Settings();
             GetData getdata = new GetData();
             SerializeData serialize = new SerializeData();
-            products = getdata.FromTextFile(FileName);
-            foreach (Product p in products) { Console.WriteLine(p.Type); }
+            List<Product> products;
+            products = getdata.FromTextFile(settings.FileName);
             serialize.JsonSerialization(products);
         }
     }
