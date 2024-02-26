@@ -21,7 +21,7 @@ namespace OOD_Proj_1
             return generators[words[0]].Create(words);
         }
     }
-    [JsonDerivedType(typeof(CargoPlane), 0)]
+    [JsonDerivedType(typeof(CargoPlane), 0)] // Instead of 0, 1... There can be "CP", "PP"...
     [JsonDerivedType(typeof(PassengerPlane), 1)]
     [JsonDerivedType(typeof(Passenger), 2)]
     [JsonDerivedType(typeof(Crew), 3)]
@@ -39,7 +39,7 @@ namespace OOD_Proj_1
         public string Serial { get; set; }
         public string Country { get; set; }
         public string Model { get; set; }
-        public Single MaxLoad;
+        public Single MaxLoad { get; set; }
 
         public CargoPlane(string[] words)
         {

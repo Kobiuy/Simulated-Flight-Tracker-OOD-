@@ -16,7 +16,14 @@ namespace OOD_Proj_1
         };
         public void Serialize(List<Product> products)
         {
-            serializators[settings.SerializationType].Serialize(products);
+            try
+            {
+                serializators[settings.SerializationType].Serialize(products);
+            }  
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
     public abstract class Serializator

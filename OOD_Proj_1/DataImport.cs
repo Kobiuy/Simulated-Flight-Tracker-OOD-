@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace OOD_Proj_1
@@ -39,7 +40,17 @@ namespace OOD_Proj_1
                     }
                 }
             }
+            catch (FormatException e)
+            {
+                Console.WriteLine("Error in DataSource");
+                Console.WriteLine(e.Message);
+            }
             catch (IOException e)
+            {
+                Console.WriteLine("IOException occured while reading from DataSource");
+                Console.WriteLine(e.Message);
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
