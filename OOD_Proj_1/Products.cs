@@ -36,6 +36,7 @@ namespace OOD_Proj_1
     }
     public class CargoPlane : Product
     {
+        public CargoPlane() { }
         public string Serial { get; set; }
         public string Country { get; set; }
         public string Model { get; set; }
@@ -53,6 +54,7 @@ namespace OOD_Proj_1
     }
     public class PassengerPlane : Product
     {
+        public PassengerPlane() { }
         public string Serial { get; set; }
         public string Country { get; set; }
         public string Model { get; set; }
@@ -74,6 +76,7 @@ namespace OOD_Proj_1
     }
     public class Passenger : Product
     {
+        public Passenger() { }
         public string Name { get; set; }
         public UInt64 Age { get; set; }
         public string Phone { get; set; }
@@ -95,6 +98,7 @@ namespace OOD_Proj_1
     }
     public class Crew : Product
     {
+        public Crew() { }
         public string Name { get; set; }
         public UInt64 Age { get; set; }
         public string Phone { get; set; }
@@ -115,6 +119,7 @@ namespace OOD_Proj_1
     }
     public class Cargo : Product
     {
+        public Cargo() { }
         public Single Weight { get; set; }
         public string Code { get; set; }
         public string Description { get; set; }
@@ -131,12 +136,14 @@ namespace OOD_Proj_1
 
     public class Airport : Product
     {
+        public Airport() { }
         public string Name { get; set; }
         public string Code { get; set; }
         public Single Longitude { get; set; }
         public Single Latitude { get; set; }
         public Single AMSL { get; set; }
         public string Country { get; set; }
+
         public Airport(string[] words)
         {
             Type = words[0];
@@ -151,6 +158,7 @@ namespace OOD_Proj_1
     }
     public class Fligth : Product
     {
+        public Fligth() { }
         public UInt64 OriginAsID { get; set; }
         public UInt64 TargetAsID { get; set; }
         public string TakeOffTime { get; set; }
