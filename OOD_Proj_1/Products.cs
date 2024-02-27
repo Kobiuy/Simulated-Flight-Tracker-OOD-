@@ -21,6 +21,7 @@ namespace OOD_Proj_1
             return generators[words[0]].Create(words);
         }
     }
+
     [JsonDerivedType(typeof(CargoPlane), "CP")]
     [JsonDerivedType(typeof(PassengerPlane), "PP")]
     [JsonDerivedType(typeof(Passenger), "P")]
@@ -28,7 +29,7 @@ namespace OOD_Proj_1
     [JsonDerivedType(typeof(Cargo), "CA")]
     [JsonDerivedType(typeof(Airport), "AI")]
     [JsonDerivedType(typeof(Fligth), "FL")]
-    public abstract class Product
+    public abstract class Product // Base class of objects created by "Factory"
     {
         public string Type { get; set; }
         public UInt64 ID { get; set; }
@@ -50,7 +51,6 @@ namespace OOD_Proj_1
     public class CargoPlane : Plane
     {
         public CargoPlane() { }
-
         public Single MaxLoad { get; set; }
 
         public CargoPlane(string[] words)
@@ -123,6 +123,7 @@ namespace OOD_Proj_1
         public Single Weight { get; set; }
         public string Code { get; set; }
         public string Description { get; set; }
+
         public Cargo(string[] words)
         {
             Type = words[0];
@@ -131,9 +132,7 @@ namespace OOD_Proj_1
             Code = words[3];
             Description = words[4];
         }
-
     }
-
     public class Airport : Product
     {
         public Airport() { }
@@ -169,6 +168,7 @@ namespace OOD_Proj_1
         public UInt64 PlaneID { get; set; }
         public List<UInt64> CrewAsIDs { get; set; }
         public List<UInt64> LoadAsIDs { get; set; }
+
         public Fligth(string[] words)
         {
             Type = words[0];
@@ -182,6 +182,10 @@ namespace OOD_Proj_1
             AMSL = Single.Parse(words[8], culture);
             PlaneID = UInt64.Parse(words[9]);
             CrewAsIDs = words[10].ToUInt64List();
+            if (CrewAsIDs.Count == 0) 
+            {
+                throw new Exception("Plane in flight " + ID.ToString() + " has no crew members. Check data source.");
+            }
             LoadAsIDs = words[11].ToUInt64List();
         }
     }

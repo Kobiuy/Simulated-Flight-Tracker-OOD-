@@ -1,6 +1,6 @@
 ﻿namespace OOD_Proj_1
 {
-    abstract class Generator
+    abstract class Generator // Base class of classes generating "Products"
     {
         abstract public Product Create(string[] words);
     }

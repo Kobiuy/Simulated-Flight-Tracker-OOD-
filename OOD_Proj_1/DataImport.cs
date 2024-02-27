@@ -18,7 +18,7 @@ namespace OOD_Proj_1
             return Importers[Settings.DataSource].Import();
         }
     }
-    public abstract class Importer
+    public abstract class Importer // Class inherited by classes importing data
     {
         protected Factory factory = new();
         abstract public List<Product> Import();

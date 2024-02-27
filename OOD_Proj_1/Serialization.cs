@@ -25,11 +25,10 @@ namespace OOD_Proj_1
             }
         }
     }
-    public abstract class Serializator
+    public abstract class Serializator // Class inherited by classes serializing data
     {
         abstract public void Serialize(List<Product> products);
     }
-
     public class JsonSerializator : Serializator
     {
         public override void Serialize(List<Product> products)
