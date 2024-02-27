@@ -34,12 +34,23 @@ namespace OOD_Proj_1
         public UInt64 ID { get; set; }
         readonly protected CultureInfo culture = CultureInfo.InvariantCulture;
     }
-    public class CargoPlane : Product
+    public abstract class Person : Product
     {
-        public CargoPlane() { }
+        public string Name { get; set; }
+        public UInt64 Age { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+    }
+    public abstract class Plane : Product
+    {
         public string Serial { get; set; }
         public string Country { get; set; }
         public string Model { get; set; }
+    }
+    public class CargoPlane : Plane
+    {
+        public CargoPlane() { }
+
         public Single MaxLoad { get; set; }
 
         public CargoPlane(string[] words)
@@ -52,12 +63,9 @@ namespace OOD_Proj_1
             MaxLoad = Single.Parse(words[5], culture);
         }
     }
-    public class PassengerPlane : Product
+    public class PassengerPlane : Plane
     {
         public PassengerPlane() { }
-        public string Serial { get; set; }
-        public string Country { get; set; }
-        public string Model { get; set; }
         public UInt16 FirstClassSize { get; set; }
         public UInt16 BusinessClassSize { get; set; }
         public UInt16 EconomyClassSize { get; set; }
@@ -74,13 +82,9 @@ namespace OOD_Proj_1
             EconomyClassSize = UInt16.Parse(words[7]);
         }
     }
-    public class Passenger : Product
+    public class Passenger : Person
     {
         public Passenger() { }
-        public string Name { get; set; }
-        public UInt64 Age { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
         public string Class { get; set; }
         public UInt64 Miles { get; set; }
 
@@ -96,13 +100,9 @@ namespace OOD_Proj_1
             Miles = UInt64.Parse(words[7]);
         }
     }
-    public class Crew : Product
+    public class Crew : Person
     {
         public Crew() { }
-        public string Name { get; set; }
-        public UInt64 Age { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
         public UInt16 Practice { get; set; }
         public string Role { get; set; }
         public Crew(string[] words)
