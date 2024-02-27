@@ -39,7 +39,7 @@ namespace OOD_Proj_1
                 WriteIndented = true,
             };
             string s;
-            using (var sw = new StreamWriter("Products.json"))
+            using (var sw = new StreamWriter(Settings.OutputFileName))
             {
                 s = JsonSerializer.Serialize(products, options);
                 sw.WriteLine(s);

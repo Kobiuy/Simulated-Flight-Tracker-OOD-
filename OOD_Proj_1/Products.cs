@@ -167,8 +167,8 @@ namespace OOD_Proj_1
         public Single Latitude { get; set; }
         public Single AMSL { get; set; }
         public UInt64 PlaneID { get; set; }
-        public List<UInt64> CrewAsIDs {  get; set; }
-        public List<UInt64> LoadAsIDs {  get; set; }
+        public List<UInt64> CrewAsIDs { get; set; }
+        public List<UInt64> LoadAsIDs { get; set; }
         public Fligth(string[] words)
         {
             Type = words[0];

@@ -7,6 +7,7 @@ namespace OOD_Proj_1
         public static string SerializationType = "JSON"; // Choose from ["JSON"]
         public static string DataSource = "FILE"; // Choose from ["FILE"]
         public static string FileName = "example_data.ftr"; // Set source file name
+        public static string OutputFileName = "Products.json"; // Set output file name
     }
 
     internal class Program
