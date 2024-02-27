@@ -9,19 +9,17 @@ namespace OOD_Proj_1
 {
     internal class DataImporter
     {
-        Settings settings = new Settings();
         Dictionary<string, Importer> Importers = new Dictionary<string, Importer>()
         {
             { "FILE", new FileImporter() },
         };
         public List<Product> ImportData()
         {
-            return Importers[settings.DataSource].Import();
+            return Importers[Settings.DataSource].Import();
         }
     }
     public abstract class Importer
     {
-        protected Settings settings = new Settings();
         protected Factory factory = new();
         abstract public List<Product> Import();
     }
@@ -32,7 +30,7 @@ namespace OOD_Proj_1
             List<Product> products = new List<Product>();
             try
             {
-                using (var sr = new StreamReader(settings.FileName))
+                using (var sr = new StreamReader(Settings.FileName))
                 {
                     while (!sr.EndOfStream)
                     {

@@ -9,7 +9,6 @@ namespace OOD_Proj_1
 {
     public class SerializeData
     {
-        Settings settings = new Settings();
         Dictionary<string, Serializator> serializators = new Dictionary<string, Serializator>()
         {
             { "JSON", new JsonSerializator() },
@@ -18,8 +17,8 @@ namespace OOD_Proj_1
         {
             try
             {
-                serializators[settings.SerializationType].Serialize(products);
-            }  
+                serializators[Settings.SerializationType].Serialize(products);
+            }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);

@@ -21,13 +21,13 @@ namespace OOD_Proj_1
             return generators[words[0]].Create(words);
         }
     }
-    [JsonDerivedType(typeof(CargoPlane), 0)] // Instead of 0, 1... There can be "CP", "PP"...
-    [JsonDerivedType(typeof(PassengerPlane), 1)]
-    [JsonDerivedType(typeof(Passenger), 2)]
-    [JsonDerivedType(typeof(Crew), 3)]
-    [JsonDerivedType(typeof(Cargo), 4)]
-    [JsonDerivedType(typeof(Airport), 5)]
-    [JsonDerivedType(typeof(Fligth), 6)]
+    [JsonDerivedType(typeof(CargoPlane), "CP")]
+    [JsonDerivedType(typeof(PassengerPlane), "PP")]
+    [JsonDerivedType(typeof(Passenger), "P")]
+    [JsonDerivedType(typeof(Crew), "C")]
+    [JsonDerivedType(typeof(Cargo), "CA")]
+    [JsonDerivedType(typeof(Airport), "AI")]
+    [JsonDerivedType(typeof(Fligth), "FL")]
     public abstract class Product
     {
         public string Type { get; set; }
