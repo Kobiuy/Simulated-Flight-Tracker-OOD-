@@ -181,16 +181,8 @@ namespace OOD_Proj_1
             Latitude = Single.Parse(words[7], culture);
             AMSL = Single.Parse(words[8], culture);
             PlaneID = UInt64.Parse(words[9]);
-            string[] crewIDs = words[10].Replace('[', ' ').Replace(']', ' ').Trim().Split(';');
-            foreach (string member in crewIDs)
-            {
-                CrewAsIDs.Add(UInt64.Parse(member));
-            }
-            string[] LoadIDs = words[11].Replace('[', ' ').Replace(']', ' ').Trim().Split(';');
-            foreach (string LoadID in LoadIDs)
-            {
-                LoadAsIDs.Add(UInt64.Parse(LoadID));
-            }
+            CrewAsIDs = words[10].ToUInt64Array();
+            LoadAsIDs = words[11].ToUInt64Array();
         }
     }
 }
