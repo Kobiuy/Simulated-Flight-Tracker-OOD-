@@ -36,17 +36,13 @@ namespace OOD_Proj_1
         {
             var options = new JsonSerializerOptions
             {
-                IncludeFields = true,
                 WriteIndented = true,
             };
             string s;
             using (var sw = new StreamWriter("Products.json"))
             {
-                //foreach (Product p in products)
-                //{
                 s = JsonSerializer.Serialize(products, options);
                 sw.WriteLine(s);
-                //}
             }
         }
     }

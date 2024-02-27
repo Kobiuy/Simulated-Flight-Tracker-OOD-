@@ -167,8 +167,8 @@ namespace OOD_Proj_1
         public Single Latitude { get; set; }
         public Single AMSL { get; set; }
         public UInt64 PlaneID { get; set; }
-        public List<UInt64> CrewAsIDs = new List<UInt64>();
-        public List<UInt64> LoadAsIDs = new List<UInt64>();
+        public List<UInt64> CrewAsIDs {  get; set; }
+        public List<UInt64> LoadAsIDs {  get; set; }
         public Fligth(string[] words)
         {
             Type = words[0];
@@ -181,8 +181,8 @@ namespace OOD_Proj_1
             Latitude = Single.Parse(words[7], culture);
             AMSL = Single.Parse(words[8], culture);
             PlaneID = UInt64.Parse(words[9]);
-            CrewAsIDs = words[10].ToUInt64Array();
-            LoadAsIDs = words[11].ToUInt64Array();
+            CrewAsIDs = words[10].ToUInt64List();
+            LoadAsIDs = words[11].ToUInt64List();
         }
     }
 }

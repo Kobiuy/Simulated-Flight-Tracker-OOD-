@@ -4,9 +4,9 @@ namespace OOD_Proj_1
 {
     public static class Settings
     {
-        public static string SerializationType = "JSON";
-        public static string DataSource = "FILE";
-        public static string FileName = "example_data.ftr";
+        public static string SerializationType = "JSON"; // Choose from ["JSON"]
+        public static string DataSource = "FILE"; // Choose from ["FILE"]
+        public static string FileName = "example_data.ftr"; // Set source file name
     }
 
     internal class Program

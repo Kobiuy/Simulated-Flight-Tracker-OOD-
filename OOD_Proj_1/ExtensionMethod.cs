@@ -8,7 +8,7 @@ namespace OOD_Proj_1
 {
     public static class StringExtension
     {
-        public static List<UInt64> ToUInt64Array(this string str)
+        public static List<UInt64> ToUInt64List(this string str)
         {
             List<UInt64> UInt64List = new List<UInt64>();
             string[] Elements = str.Replace('[', ' ').Replace(']', ' ').Trim().Split(';');
