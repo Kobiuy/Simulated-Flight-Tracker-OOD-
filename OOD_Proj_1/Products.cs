@@ -1,5 +1,10 @@
-﻿using System.Globalization;
+﻿using System.Data;
+using System;
+using System.Globalization;
+using System.Numerics;
 using System.Text.Json.Serialization;
+using System.Xml.Linq;
+using System.Xml.Schema;
 
 namespace OOD_Proj_1
 {
@@ -33,7 +38,6 @@ namespace OOD_Proj_1
     {
         public string Type { get; set; }
         public UInt64 ID { get; set; }
-        readonly protected CultureInfo culture = CultureInfo.InvariantCulture;
     }
     public abstract class Person : Product
     {
@@ -53,14 +57,14 @@ namespace OOD_Proj_1
         public CargoPlane() { }
         public Single MaxLoad { get; set; }
 
-        public CargoPlane(string[] words)
+        public CargoPlane(string type, UInt64 id, string serial, string country, string model, Single maxload)
         {
-            Type = words[0];
-            ID = UInt64.Parse(words[1]);
-            Serial = words[2];
-            Country = words[3];
-            Model = words[4];
-            MaxLoad = Single.Parse(words[5], culture);
+            Type = type;
+            ID = id;
+            Serial = serial;
+            Country = country;
+            Model = model;
+            MaxLoad = maxload;
         }
     }
     public class PassengerPlane : Plane
@@ -70,16 +74,16 @@ namespace OOD_Proj_1
         public UInt16 BusinessClassSize { get; set; }
         public UInt16 EconomyClassSize { get; set; }
 
-        public PassengerPlane(string[] words)
+        public PassengerPlane(string type, UInt64 id, string serial, string country, string model, UInt16 fcs, UInt16 bcs, UInt16 ecs)
         {
-            Type = words[0];
-            ID = UInt64.Parse(words[1]);
-            Serial = words[2];
-            Country = words[3];
-            Model = words[4];
-            FirstClassSize = UInt16.Parse(words[5]);
-            BusinessClassSize = UInt16.Parse(words[6]);
-            EconomyClassSize = UInt16.Parse(words[7]);
+            Type = type;
+            ID = id;
+            Serial = serial;
+            Country = country;
+            Model = model;
+            FirstClassSize = fcs;
+            BusinessClassSize = bcs;
+            EconomyClassSize = ecs;
         }
     }
     public class Passenger : Person
@@ -88,16 +92,16 @@ namespace OOD_Proj_1
         public string Class { get; set; }
         public UInt64 Miles { get; set; }
 
-        public Passenger(string[] words)
+        public Passenger(string type, UInt64 id, string name, UInt64 age, string phone, string email, string cclass, UInt64 miles)
         {
-            Type = words[0];
-            ID = UInt64.Parse(words[1]);
-            Name = words[2];
-            Age = UInt64.Parse(words[3]);
-            Phone = words[4];
-            Email = words[5];
-            Class = words[6];
-            Miles = UInt64.Parse(words[7]);
+            Type = type;
+            ID = id;
+            Name = name;
+            Age = age;
+            Phone = phone;
+            Email = email;
+            Class = cclass;
+            Miles = miles;
         }
     }
     public class Crew : Person
@@ -105,16 +109,15 @@ namespace OOD_Proj_1
         public Crew() { }
         public UInt16 Practice { get; set; }
         public string Role { get; set; }
-        public Crew(string[] words)
+        public Crew(string type, UInt64 id, string name, UInt64 age, string phone, string email, UInt16 practice, string role)
         {
-            Type = words[0];
-            ID = UInt64.Parse(words[1]);
-            Name = words[2];
-            Age = UInt64.Parse(words[3]);
-            Phone = words[4];
-            Email = words[5];
-            Practice = UInt16.Parse(words[6]);
-            Role = words[7];
+            Type = type;
+            ID = id;
+            Name = name;
+            Age = age;
+            Phone = phone;
+            Email = email;
+            Role = role;
         }
     }
     public class Cargo : Product
@@ -124,13 +127,13 @@ namespace OOD_Proj_1
         public string Code { get; set; }
         public string Description { get; set; }
 
-        public Cargo(string[] words)
+        public Cargo(string type, UInt64 id, Single weight, string code, string description)
         {
-            Type = words[0];
-            ID = UInt64.Parse(words[1]);
-            Weight = Single.Parse(words[2], culture);
-            Code = words[3];
-            Description = words[4];
+            Type = type;
+            ID = id;
+            Weight = weight;
+            Code = code;
+            Description = description;
         }
     }
     public class Airport : Product
@@ -143,16 +146,16 @@ namespace OOD_Proj_1
         public Single AMSL { get; set; }
         public string Country { get; set; }
 
-        public Airport(string[] words)
+        public Airport(string type, UInt64 id, string name, string code, Single longitude, Single latitude, Single amsl, string country)
         {
-            Type = words[0];
-            ID = UInt64.Parse(words[1]);
-            Name = words[2];
-            Code = words[3];
-            Longitude = Single.Parse(words[4], culture);
-            Latitude = Single.Parse(words[5], culture);
-            AMSL = Single.Parse(words[6], culture);
-            Country = words[7];
+            Type = type;
+            ID = id;
+            Name = name;
+            Code = code;
+            Longitude = longitude;
+            Latitude = latitude;
+            AMSL = amsl;
+            Country = country;
         }
     }
     public class Fligth : Product
@@ -169,24 +172,25 @@ namespace OOD_Proj_1
         public List<UInt64> CrewAsIDs { get; set; }
         public List<UInt64> LoadAsIDs { get; set; }
 
-        public Fligth(string[] words)
+        public Fligth(UInt64 ID, UInt64 OriginID, UInt64 TargetID, string TakeOffTime, string LandingTime,
+            Single Longitude, Single Latitude, Single AMSL, UInt64 PlaneID, List<UInt64> CrewAsID, List<UInt64> LoadaAsID)
         {
-            Type = words[0];
-            ID = UInt64.Parse(words[1]);
-            OriginAsID = UInt64.Parse(words[2]);
-            TargetAsID = UInt64.Parse(words[3]);
-            TakeOffTime = words[4];
-            LandingTime = words[5];
-            Longitude = Single.Parse(words[6], culture);
-            Latitude = Single.Parse(words[7], culture);
-            AMSL = Single.Parse(words[8], culture);
-            PlaneID = UInt64.Parse(words[9]);
-            CrewAsIDs = words[10].ToUInt64List();
-            if (CrewAsIDs.Count == 0) 
+            this.ID = ID;
+            this.OriginAsID = OriginID;
+            this.TargetAsID = TargetID;
+            this.TakeOffTime = TakeOffTime;
+            this.LandingTime = LandingTime;
+            this.Longitude = Longitude;
+            this.Latitude = Latitude;
+            this.AMSL = AMSL;
+            this.PlaneID = PlaneID;
+            this.CrewAsIDs = CrewAsID;
+            this.LoadAsIDs = LoadaAsID;
+            if (CrewAsIDs.Count == 0)
             {
                 throw new Exception("Plane in flight " + ID.ToString() + " has no crew members. Check data source.");
             }
-            LoadAsIDs = words[11].ToUInt64List();
         }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,7 +39,8 @@ namespace OOD_Proj_1
                 WriteIndented = true,
             };
             string s;
-            using (var sw = new StreamWriter(Settings.OutputFileName))
+            DateTime time = DateAndTime.Now;
+            using (var sw = new StreamWriter($"snapshot_{time.Hour}_{time.Minute}_{time.Second}.json"))
             {
                 s = JsonSerializer.Serialize(products, options);
                 sw.WriteLine(s);
