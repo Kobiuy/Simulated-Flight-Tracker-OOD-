@@ -73,7 +73,7 @@ namespace OOD_Proj_1
 
         public void Parser(Message message)
         {
-            Dictionary<string, Build> builders = new Dictionary<string, Build>()
+            Dictionary<string, Builder> builders = new Dictionary<string, Builder>()
             {
                             { "NCR", new BuildCrew() },
                             { "NPA", new BuildPassenger() },
@@ -82,18 +82,17 @@ namespace OOD_Proj_1
                             { "NCP", new BuildCargoPlane() },
                             { "NAI", new BuildAirport() },
                             { "NFL", new BuildFlight() },
-
             };
 
             builders[Encoding.ASCII.GetString(message.MessageBytes[0..3])].build(message);
         }
     }
 
-    public abstract class Build
+    public abstract class Builder
     {
         abstract public void build(Message message);
     }
-    public class BuildCrew : Build
+    public class BuildCrew : Builder
     {
         public override void build(Message message)
         {
@@ -109,7 +108,7 @@ namespace OOD_Proj_1
             ProductList.Products.Add(new Crew("C", ID, Name, Age, Phone, Email, Practice, Role.ToString()));
         }
     }
-    public class BuildPassenger : Build
+    public class BuildPassenger : Builder
     {
         public override void build(Message message)
         {
@@ -125,7 +124,7 @@ namespace OOD_Proj_1
             ProductList.Products.Add(new Passenger("P", ID, Name, Age, Phone, Email, Class.ToString(), Miles));
         }
     }
-    public class BuildCargo : Build
+    public class BuildCargo : Builder
     {
         public override void build(Message message)
         {
@@ -135,11 +134,11 @@ namespace OOD_Proj_1
             string Code = Encoding.ASCII.GetString(message.MessageBytes[19..25]);
             UInt16 DL = BitConverter.ToUInt16(message.MessageBytes[25..27]);
             string Description = Encoding.ASCII.GetString(message.MessageBytes[27..(27 + DL)]);
-            ProductList.Products.Add(new Cargo("P", ID, Weight, Code, Description));
+            ProductList.Products.Add(new Cargo("CA", ID, Weight, Code, Description));
 
         }
     }
-    public class BuildCargoPlane : Build
+    public class BuildCargoPlane : Builder
     {
         public override void build(Message message)
         {
@@ -149,11 +148,11 @@ namespace OOD_Proj_1
             UInt16 ML = BitConverter.ToUInt16(message.MessageBytes[28..30]);
             string Model = Encoding.ASCII.GetString(message.MessageBytes[30..(30 + ML)]);
             Single MaxLoad = BitConverter.ToSingle(message.MessageBytes[(30 + ML)..(34 + ML)]);
-            ProductList.Products.Add(new CargoPlane("P", ID, Serial, ISOCC, Model, MaxLoad));
+            ProductList.Products.Add(new CargoPlane("CP", ID, Serial, ISOCC, Model, MaxLoad));
 
         }
     }
-    public class BuildPassengerPlane : Build
+    public class BuildPassengerPlane : Builder
     {
         public override void build(Message message)
         {
@@ -165,11 +164,11 @@ namespace OOD_Proj_1
             UInt16 FirstClassSize = BitConverter.ToUInt16(message.MessageBytes[(30 + ML)..(32 + ML)]);
             UInt16 BusinessClassSize = BitConverter.ToUInt16(message.MessageBytes[(32 + ML)..(34 + ML)]);
             UInt16 EconomyClassSize = BitConverter.ToUInt16(message.MessageBytes[(34 + ML)..(36 + ML)]);
-            ProductList.Products.Add(new PassengerPlane("P", ID, Serial, ISOCC, Model, FirstClassSize, BusinessClassSize, EconomyClassSize));
+            ProductList.Products.Add(new PassengerPlane("PP", ID, Serial, ISOCC, Model, FirstClassSize, BusinessClassSize, EconomyClassSize));
 
         }
     }
-    public class BuildAirport : Build
+    public class BuildAirport : Builder
     {
         public override void build(Message message)
         {
@@ -181,11 +180,11 @@ namespace OOD_Proj_1
             Single Latitude = BitConverter.ToSingle(message.MessageBytes[(24 + NL)..(28 + NL)]);
             Single AMSL = BitConverter.ToSingle(message.MessageBytes[(28 + NL)..(32 + NL)]);
             string ISOCC = Encoding.ASCII.GetString(message.MessageBytes[(32 + NL)..(35 + NL)]);
-            ProductList.Products.Add(new Airport("P", ID, Name, Code, Longitude, Latitude, AMSL, ISOCC));
+            ProductList.Products.Add(new Airport("AI", ID, Name, Code, Longitude, Latitude, AMSL, ISOCC));
 
         }
     }
-    public class BuildFlight : Build
+    public class BuildFlight : Builder
     {
         public override void build(Message message)
         {
@@ -209,7 +208,7 @@ namespace OOD_Proj_1
                 temp = 59 + i * 8 + 8 * CC;
                 Load.Add(BitConverter.ToUInt64(message.MessageBytes, temp));
             }
-            ProductList.Products.Add(new Fligth(ID, OriginID, TargetID, TakeOff.ToString(), Landing.ToString(), 0, 0, 0, PlaneID, Crew, Load));
+            ProductList.Products.Add(new Fligth("FL", ID, OriginID, TargetID, TakeOff.ToString(), Landing.ToString(), 0, 0, 0, PlaneID, Crew, Load));
         }
     }
 }

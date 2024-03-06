@@ -26,7 +26,7 @@ namespace OOD_Proj_1
                 {
                     simulator.Run();
                 }
-                catch (Exception ex) { }
+                catch (ThreadInterruptedException ex) { }
             }));
             ServerThread.Start();
         }

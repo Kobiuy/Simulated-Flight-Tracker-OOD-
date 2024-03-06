@@ -7,7 +7,6 @@ namespace OOD_Proj_1
     public static class ProductList
     {
         public static List<Product> Products = new List<Product>();
-
     }
 
     public static class Listening
@@ -16,6 +15,7 @@ namespace OOD_Proj_1
         {
             string UserInput;
             SerializeData serializator = new SerializeData();
+            Console.WriteLine("Write \"print\" to make a snapshot and \"exit\" to exit");
             while (true)
             {
                 UserInput = Console.ReadLine();
@@ -41,9 +41,6 @@ namespace OOD_Proj_1
             DataImporter importer = new DataImporter();
             SerializeData serializator = new SerializeData();
             List<Product> products;
-            //products = importer.ImportData();
-            //serializator.Serialize(products);
-            //erializator.Serialize(ProductList.Products);
             products = importer.ImportData();
             Listening.Listen();
         }

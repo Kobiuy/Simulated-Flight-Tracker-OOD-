@@ -104,6 +104,7 @@ namespace OOD_Proj_1
     {
         public override Fligth Create(string[] words)
         {
+            string type = words[0];
             UInt64 ID = UInt64.Parse(words[1]);
             UInt64 OriginAsID = UInt64.Parse(words[2]);
             UInt64 TargetAsID = UInt64.Parse(words[3]);
@@ -115,7 +116,7 @@ namespace OOD_Proj_1
             UInt64 PlaneID = UInt64.Parse(words[9]);
             List<UInt64> CrewAsIDs = words[10].ToUInt64List();
             List<UInt64> LoadAsIDs = words[11].ToUInt64List();
-            return new Fligth();
+            return new Fligth(type, ID, OriginAsID, TargetAsID, TakeOffTime, LandingTime, Longitude, Latitude, AMSL, PlaneID, CrewAsIDs, LoadAsIDs);
         }
     }
 }

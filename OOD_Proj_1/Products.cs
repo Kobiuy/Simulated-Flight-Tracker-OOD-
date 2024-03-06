@@ -172,9 +172,10 @@ namespace OOD_Proj_1
         public List<UInt64> CrewAsIDs { get; set; }
         public List<UInt64> LoadAsIDs { get; set; }
 
-        public Fligth(UInt64 ID, UInt64 OriginID, UInt64 TargetID, string TakeOffTime, string LandingTime,
+        public Fligth(string Type,  UInt64 ID, UInt64 OriginID, UInt64 TargetID, string TakeOffTime, string LandingTime,
             Single Longitude, Single Latitude, Single AMSL, UInt64 PlaneID, List<UInt64> CrewAsID, List<UInt64> LoadaAsID)
         {
+            this.Type = Type;
             this.ID = ID;
             this.OriginAsID = OriginID;
             this.TargetAsID = TargetID;
