@@ -3,7 +3,6 @@ using System.Text.Json;
 using NetworkSourceSimulator;
 namespace OOD_Proj_1
 {
-
     public static class ProductList
     {
         public static List<Product> Products = new List<Product>();
@@ -15,7 +14,7 @@ namespace OOD_Proj_1
         {
             string UserInput;
             SerializeData serializator = new SerializeData();
-            Console.WriteLine("Write \"print\" to make a snapshot and \"exit\" to exit");
+            Console.WriteLine("Write \"print\" to make a snapshot or \"exit\" to exit");
             while (true)
             {
                 UserInput = Console.ReadLine();
@@ -28,6 +27,9 @@ namespace OOD_Proj_1
                         ServerSimulator.ServerThread.Interrupt();
                         ServerSimulator.ServerThread.Join();
                         return;
+                    default:
+                        Console.WriteLine($"[{UserInput}] nie jest poprawną komendą");
+                        break;
                 }
             }
         }

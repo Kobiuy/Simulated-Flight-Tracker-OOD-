@@ -17,7 +17,7 @@ namespace OOD_Proj_1
             simulator.OnNewDataReady += (object sender, NewDataReadyArgs args) =>
             {
                 Message message = simulator.GetMessageAt(args.MessageIndex);
-                serverImporter.Parser(message);
+                serverImporter.ParseMessage(message);
             };
 
             ServerThread = new Thread(new ThreadStart(() =>

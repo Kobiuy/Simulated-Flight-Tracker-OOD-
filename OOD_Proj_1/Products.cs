@@ -172,21 +172,21 @@ namespace OOD_Proj_1
         public List<UInt64> CrewAsIDs { get; set; }
         public List<UInt64> LoadAsIDs { get; set; }
 
-        public Fligth(string Type,  UInt64 ID, UInt64 OriginID, UInt64 TargetID, string TakeOffTime, string LandingTime,
-            Single Longitude, Single Latitude, Single AMSL, UInt64 PlaneID, List<UInt64> CrewAsID, List<UInt64> LoadaAsID)
+        public Fligth(string type, UInt64 id, UInt64 originID, UInt64 targetID, string takeOffTime, string landingTime,
+            Single longitude, Single latitude, Single amsl, UInt64 planeID, List<UInt64> crewAsID, List<UInt64> loadaAsID)
         {
-            this.Type = Type;
-            this.ID = ID;
-            this.OriginAsID = OriginID;
-            this.TargetAsID = TargetID;
-            this.TakeOffTime = TakeOffTime;
-            this.LandingTime = LandingTime;
-            this.Longitude = Longitude;
-            this.Latitude = Latitude;
-            this.AMSL = AMSL;
-            this.PlaneID = PlaneID;
-            this.CrewAsIDs = CrewAsID;
-            this.LoadAsIDs = LoadaAsID;
+            Type = type;
+            ID = id;
+            OriginAsID = originID;
+            TargetAsID = targetID;
+            TakeOffTime = takeOffTime;
+            LandingTime = landingTime;
+            Longitude = longitude;
+            Latitude = latitude;
+            AMSL = amsl;
+            PlaneID = planeID;
+            CrewAsIDs = crewAsID;
+            LoadAsIDs = loadaAsID;
             if (CrewAsIDs.Count == 0)
             {
                 throw new Exception("Plane in flight " + ID.ToString() + " has no crew members. Check data source.");
