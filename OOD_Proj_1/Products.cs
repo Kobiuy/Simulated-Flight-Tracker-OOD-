@@ -117,6 +117,7 @@ namespace OOD_Proj_1
             Age = age;
             Phone = phone;
             Email = email;
+            Practice = practice;
             Role = role;
         }
     }

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -12,7 +11,7 @@ using System.Xml.Linq;
 
 namespace OOD_Proj_1
 {
-    internal class DataImporter
+    public class DataImporter
     {
         Dictionary<string, Importer> Importers = new Dictionary<string, Importer>()
         {

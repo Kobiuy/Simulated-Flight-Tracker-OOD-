@@ -25,6 +25,10 @@ namespace OOD_Proj_1
                 Console.WriteLine(e.Message);
             }
         }
+        public void Serialize()
+        {
+            Serialize(ProductList.Products);
+        }
     }
     public abstract class Serializator // Class inherited by classes serializing data
     {
