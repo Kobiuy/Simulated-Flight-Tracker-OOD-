@@ -96,7 +96,7 @@ namespace OOD_Proj_1
             UInt16 EL = BitConverter.ToUInt16(message.MessageBytes, 31 + NL);
             string Email = Encoding.ASCII.GetString(message.MessageBytes[(33 + NL)..(33 + NL + EL)]);
             char Class = Encoding.ASCII.GetChars(message.MessageBytes[(33 + NL + EL)..(34 + NL + EL)])[0];
-            UInt64 Miles = BitConverter.ToUInt64(message.MessageBytes[(33 + NL + EL)..(42 + EL + NL)]);
+            UInt64 Miles = BitConverter.ToUInt64(message.MessageBytes[(34 + NL + EL)..(42 + EL + NL)]);
             ProductList.Products.Add(new Passenger("P", ID, Name, Age, Phone, Email, Class.ToString(), Miles));
         }
     }
