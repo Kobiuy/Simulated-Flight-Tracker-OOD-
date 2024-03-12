@@ -203,7 +203,9 @@ namespace OOD_Proj_1
             UInt64 OriginID = BitConverter.ToUInt64(message.MessageBytes[15..23]);
             UInt64 TargetID = BitConverter.ToUInt64(message.MessageBytes[23..31]);
             Int64 TakeOff = BitConverter.ToInt64(message.MessageBytes[31..39]);
+            string TO = DateTime.UnixEpoch.AddMilliseconds(TakeOff).ToString("HH:mm");
             Int64 Landing = BitConverter.ToInt64(message.MessageBytes[39..47]);
+            string LD = DateTime.UnixEpoch.AddMilliseconds(Landing).ToString("HH:mm");
             UInt64 PlaneID = BitConverter.ToUInt64(message.MessageBytes[47..55]);
             UInt16 CC = BitConverter.ToUInt16(message.MessageBytes[55..57]);
             List<UInt64> Crew = new List<ulong>();
@@ -219,7 +221,7 @@ namespace OOD_Proj_1
                 temp = 59 + i * 8 + 8 * CC;
                 Load.Add(BitConverter.ToUInt64(message.MessageBytes, temp));
             }
-            ProductList.Products.Add(new Fligth("FL", ID, OriginID, TargetID, TakeOff.ToString(), Landing.ToString(), 0, 0, 0, PlaneID, Crew, Load));
+            ProductList.Products.Add(new Fligth("FL", ID, OriginID, TargetID, TO, LD, 0, 0, 0, PlaneID, Crew, Load));
         }
     }
 }
