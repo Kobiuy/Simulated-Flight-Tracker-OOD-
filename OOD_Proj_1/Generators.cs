@@ -163,7 +163,9 @@ namespace OOD_Proj_1
             Single Latitude = Single.Parse(words[5]);
             Single AMSL = Single.Parse(words[6]);
             string Country = words[7];
-            return new Airport(type, ID, Name, Code, Longitude, Latitude, AMSL, Country);
+            Airport airport =  new Airport(type, ID, Name, Code, Longitude, Latitude, AMSL, Country);
+            StaticProductLists.airports.Add(airport);
+            return airport;
         }
         public override void Create(Message message)
         {
@@ -175,8 +177,9 @@ namespace OOD_Proj_1
             Single Latitude = BitConverter.ToSingle(message.MessageBytes[(24 + NL)..(28 + NL)]);
             Single AMSL = BitConverter.ToSingle(message.MessageBytes[(28 + NL)..(32 + NL)]);
             string ISOCC = Encoding.ASCII.GetString(message.MessageBytes[(32 + NL)..(35 + NL)]);
-            ProductList.Products.Add(new Airport("AI", ID, Name, Code, Longitude, Latitude, AMSL, ISOCC));
-
+            Airport airport = new Airport("AI", ID, Name, Code, Longitude, Latitude, AMSL, ISOCC);
+            StaticProductLists.airports.Add(airport);
+            ProductList.Products.Add(airport);
         }
     }
     class FlightGenerator : Generator
@@ -195,7 +198,10 @@ namespace OOD_Proj_1
             UInt64 PlaneID = UInt64.Parse(words[9]);
             List<UInt64> CrewAsIDs = words[10].ToUInt64List();
             List<UInt64> LoadAsIDs = words[11].ToUInt64List();
-            return new Fligth(type, ID, OriginAsID, TargetAsID, TakeOffTime, LandingTime, Longitude, Latitude, AMSL, PlaneID, CrewAsIDs, LoadAsIDs);
+            Fligth fligth = new Fligth(type, ID, OriginAsID, TargetAsID, TakeOffTime, LandingTime, Longitude, Latitude, AMSL, PlaneID, CrewAsIDs, LoadAsIDs);
+            StaticProductLists.fligths.Add(fligth);
+            return fligth;
+
         }
         public override void Create(Message message)
         {
@@ -221,7 +227,9 @@ namespace OOD_Proj_1
                 temp = 59 + i * 8 + 8 * CC;
                 Load.Add(BitConverter.ToUInt64(message.MessageBytes, temp));
             }
-            ProductList.Products.Add(new Fligth("FL", ID, OriginID, TargetID, TO, LD, 0, 0, 0, PlaneID, Crew, Load));
+            Fligth fligth = new Fligth("FL", ID, OriginID, TargetID, TO, LD, 0, 0, 0, PlaneID, Crew, Load);
+            ProductList.Products.Add(fligth);
+            StaticProductLists.fligths.Add(fligth);
         }
     }
 }
