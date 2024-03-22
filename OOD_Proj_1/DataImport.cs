@@ -32,7 +32,6 @@ namespace OOD_Proj_1
     {
         public override List<Product> Import()
         {
-            List<Product> products = new List<Product>();
             try
             {
                 using (var sr = new StreamReader(Settings.FileName))
@@ -40,7 +39,6 @@ namespace OOD_Proj_1
                     while (!sr.EndOfStream)
                     {
                         Product product = factory.Create(sr.ReadLine());
-                        products.Add(product);
                         ProductList.Products.Add(product);
                     }
                 }
@@ -59,7 +57,7 @@ namespace OOD_Proj_1
             {
                 Console.WriteLine(e.Message);
             }
-            return products;
+            return ProductList.Products;
         }
     }
     public class ServerImporter : Importer

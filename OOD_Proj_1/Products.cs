@@ -172,8 +172,6 @@ namespace OOD_Proj_1
         public UInt64 PlaneID { get; set; }
         public List<UInt64> CrewAsIDs { get; set; }
         public List<UInt64> LoadAsIDs { get; set; }
-        public int TakeOffSecondsInDay {  get; set; }
-        public int LandingSecondsInDay { get; set; }
 
         public Fligth(string type, UInt64 id, UInt64 originID, UInt64 targetID, string takeOffTime, string landingTime,
             Single longitude, Single latitude, Single amsl, UInt64 planeID, List<UInt64> crewAsID, List<UInt64> loadaAsID)
@@ -194,8 +192,6 @@ namespace OOD_Proj_1
             {
                 throw new Exception("Plane in flight " + ID.ToString() + " has no crew members. Check data source.");
             }
-            TakeOffSecondsInDay = (int.Parse(takeOffTime[0..2]) * 60 + int.Parse(takeOffTime[3..5]))*60;
-            LandingSecondsInDay = (int.Parse(LandingTime[0..2]) * 60 + int.Parse(LandingTime[3..5]))*60;
         }
 
     }

@@ -12,13 +12,14 @@ namespace OOD_Proj_1
         public static Dictionary<string, Action> menuDict = new Dictionary<string, Action>()
             {
                 { "print", serializator.Serialize },
+                {"gui", GuiApp.StartGUI },
                 { "exit", ServerSimulator.StopServer }
             };
         public static void StartMenu()
         {
             string UserInput = "";
             Action method;
-            Console.WriteLine("Write \"print\" to make a snapshot or \"exit\" to exit");
+            Console.WriteLine("Write \"print\" to make a snapshot, \"gui\" for GUI or \"exit\" to exit");
             while (UserInput != "exit")
             {
                 UserInput = Console.ReadLine();

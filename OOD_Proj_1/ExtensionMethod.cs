@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace OOD_Proj_1
 {
+    public static class DateTimeExtension
+    {
+        public static int GetSeconds(this DateTime dt)
+        {
+            return ((dt.Hour * 60 + dt.Minute) * 60 + dt.Second);
+        }
+    }  
     public static class StringExtension
     {
         public static List<UInt64> ToUInt64List(this string str) // Method converting string starting with "[", ending with "]" containing values separated by ";" to list of UInt64 these values.
@@ -20,4 +27,5 @@ namespace OOD_Proj_1
             return UInt64List;
         }
     }
+   
 }

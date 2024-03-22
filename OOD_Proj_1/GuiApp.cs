@@ -1,0 +1,31 @@
+﻿using FlightTrackerGUI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OOD_Proj_1
+{
+    public static class GuiApp
+    {
+        public static void StartGUI()
+        {
+            if (ServerSimulator.ServerThread.IsAlive)
+            {
+                Console.WriteLine("Waiting for the end of downloading data from server");
+            }
+            while (ServerSimulator.ServerThread.IsAlive) { }
+
+            Thread GuiThread = new Thread(Runner.Run);
+            GuiThread.Start();
+            Adapter adapter = new Adapter();
+            adapter.UpdateFlights(StaticProductLists.fligths);
+            adapter.UpdateAirports(StaticProductLists.airports);
+            while (GuiThread.IsAlive)
+            {
+                Runner.UpdateGUI(adapter);
+            }
+        }
+    }
+}
