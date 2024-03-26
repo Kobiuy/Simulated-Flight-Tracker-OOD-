@@ -10,18 +10,12 @@ using Mapsui;
 using System;
 namespace OOD_Proj_1
 {
-    public static class ProductList
-    {
-        public static List<Product> Products = new List<Product>();
-    }
-
     internal class Program
     {
         static void Main(string[] args)
         {
             DataImporter importer = new DataImporter();
-            List<Product> products;
-            products = importer.ImportData();
+            importer.ImportData();
             Menu.StartMenu();
         }
     }

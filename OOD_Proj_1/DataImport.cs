@@ -38,8 +38,7 @@ namespace OOD_Proj_1
                 {
                     while (!sr.EndOfStream)
                     {
-                        Product product = factory.Create(sr.ReadLine());
-                        ProductList.Products.Add(product);
+                        factory.Create(sr.ReadLine());
                     }
                 }
             }
@@ -57,7 +56,7 @@ namespace OOD_Proj_1
             {
                 Console.WriteLine(e.Message);
             }
-            return ProductList.Products;
+            return StaticProductLists.GetAllDataList();
         }
     }
     public class ServerImporter : Importer
@@ -65,7 +64,7 @@ namespace OOD_Proj_1
         public override List<Product> Import()
         {
             ServerSimulator.StartServer();
-            return ProductList.Products;
+            return StaticProductLists.GetAllDataList();
         }
 
         public void ParseMessage(Message message)

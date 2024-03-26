@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetTopologySuite.Index.Strtree;
+using System.Collections;
 
 namespace OOD_Proj_1
 {
@@ -45,10 +46,6 @@ namespace OOD_Proj_1
             int lndtime = DateTime.Parse(fligths[index].LandingTime).GetSeconds();
             int nwtime = DateTime.Now.GetSeconds();
 
-            if (toftime > nwtime && lndtime > toftime) return new WorldPosition(start.Latitude, start.Longitude);
-            if (toftime > nwtime && lndtime < toftime && lndtime < nwtime) return new WorldPosition(target.Latitude, target.Longitude);
-            if (toftime < nwtime && lndtime < nwtime && lndtime > toftime) return new WorldPosition(target.Latitude, target.Longitude);
-
             wps.Longitude = start.Longitude + (target.Longitude - start.Longitude) * GetProgress(fligths[index], toftime, lndtime, nwtime);
             wps.Latitude = start.Latitude + (target.Latitude - start.Latitude) * GetProgress(fligths[index], toftime, lndtime, nwtime);
             return wps;
@@ -69,38 +66,29 @@ namespace OOD_Proj_1
         private static double GetProgress(Fligth fligth, int toftime, int lndtime, int nwtime)
         {
             double a, b;
+
+            if (toftime > nwtime && lndtime > toftime) return 0;
+            if (toftime > nwtime && lndtime < toftime && lndtime < nwtime) return 1;
+            if (toftime < nwtime && lndtime < nwtime && lndtime > toftime) return 1;
+
             if (toftime > lndtime)
             {
                 if (nwtime < toftime)
                 {
-                    lndtime += 24 * 60 * 60;//one day
-                    nwtime += 24 * 60 * 60; //one day
+                    lndtime += 24 * 60 * 60; // Add one day
+                    nwtime += 24 * 60 * 60; // Add one day
                 }
                 else
-                    lndtime += 24 * 60 * 60;//one day
+                    lndtime += 24 * 60 * 60; // Add one day
             }
             a = (nwtime - toftime);
             b = (lndtime - toftime);
-            /*if (toftime < lndtime)
-            {
-                a = (nwtime - toftime);
-                b = (lndtime - toftime);
-            }
-            else if(toftime > nwtime) 
-            {
-                a = Math.Abs(nwtime + toftime);
-                b = (lndtime + toftime);
-            }
-            else
-            {
-                a = Math.Abs(nwtime - toftime);
-                b = (24*60*60 - toftime + lndtime);
-            }*/
+
             double progress = a / b;
-            if (progress > 1 || progress < 0)
+            /*if (progress > 1 || progress < 0) // Debugging help
             {
-                Console.WriteLine();
-            }
+                Console.WriteLine("Put BreakPoint Here");
+            }*/
             return progress;
         }
     }

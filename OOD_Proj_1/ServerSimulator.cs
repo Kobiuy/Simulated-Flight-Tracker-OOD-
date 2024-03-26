@@ -32,8 +32,11 @@ namespace OOD_Proj_1
         }
         public static void StopServer()
         {
-            ServerThread.Interrupt();
-            ServerThread.Join();
+            if (ServerThread != null)
+            {
+                ServerThread.Interrupt();
+                ServerThread.Join();
+            }
         }
     }
 }

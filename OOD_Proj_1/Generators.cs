@@ -15,7 +15,7 @@ namespace OOD_Proj_1
     {
         readonly protected CultureInfo culture = CultureInfo.InvariantCulture;
         abstract public Product Create(string[] words);
-        abstract public void Create(Message message);
+        abstract public Product Create(Message message);
     }
     class PassengerPlaneGenerator : Generator
     {
@@ -29,11 +29,13 @@ namespace OOD_Proj_1
             UInt16 FirstClassSize = UInt16.Parse(words[5]);
             UInt16 BusinessClassSize = UInt16.Parse(words[6]);
             UInt16 EconomyClassSize = UInt16.Parse(words[7]);
-            return new PassengerPlane(Type, ID, Serial, Country, Model, FirstClassSize, BusinessClassSize, EconomyClassSize);
+            PassengerPlane passengerPlane = new PassengerPlane(Type, ID, Serial, Country, Model, FirstClassSize, BusinessClassSize, EconomyClassSize);
+            StaticProductLists.passengerPlanes.Add(passengerPlane);
+            return passengerPlane;
         }
 
 
-        public override void Create(Message message)
+        public override PassengerPlane Create(Message message)
         {
             UInt16 ID = BitConverter.ToUInt16(message.MessageBytes[7..15]);
             string Serial = Encoding.ASCII.GetString(message.MessageBytes[15..25]).TrimEnd('\0');
@@ -43,8 +45,9 @@ namespace OOD_Proj_1
             UInt16 FirstClassSize = BitConverter.ToUInt16(message.MessageBytes[(30 + ML)..(32 + ML)]);
             UInt16 BusinessClassSize = BitConverter.ToUInt16(message.MessageBytes[(32 + ML)..(34 + ML)]);
             UInt16 EconomyClassSize = BitConverter.ToUInt16(message.MessageBytes[(34 + ML)..(36 + ML)]);
-            ProductList.Products.Add(new PassengerPlane("PP", ID, Serial, ISOCC, Model, FirstClassSize, BusinessClassSize, EconomyClassSize));
-
+            PassengerPlane passengerPlane = new PassengerPlane("PP", ID, Serial, ISOCC, Model, FirstClassSize, BusinessClassSize, EconomyClassSize);
+            StaticProductLists.passengerPlanes.Add(passengerPlane);
+            return passengerPlane;
         }
     }
     class CargoPlaneGenerator : Generator
@@ -57,10 +60,12 @@ namespace OOD_Proj_1
             string Country = words[3];
             string Model = words[4];
             Single MaxLoad = Single.Parse(words[5], culture);
-            return new CargoPlane(Type, ID, Serial, Country, Model, MaxLoad);
+            CargoPlane cargoPlane = new CargoPlane(Type, ID, Serial, Country, Model, MaxLoad);
+            StaticProductLists.cargoPlanes.Add(cargoPlane);
+            return cargoPlane;
         }
 
-        public override void Create(Message message)
+        public override CargoPlane Create(Message message)
         {
             UInt16 ID = BitConverter.ToUInt16(message.MessageBytes[7..15]);
             string Serial = Encoding.ASCII.GetString(message.MessageBytes[15..25]).TrimEnd('\0');
@@ -68,7 +73,9 @@ namespace OOD_Proj_1
             UInt16 ML = BitConverter.ToUInt16(message.MessageBytes[28..30]);
             string Model = Encoding.ASCII.GetString(message.MessageBytes[30..(30 + ML)]);
             Single MaxLoad = BitConverter.ToSingle(message.MessageBytes[(30 + ML)..(34 + ML)]);
-            ProductList.Products.Add(new CargoPlane("CP", ID, Serial, ISOCC, Model, MaxLoad));
+            CargoPlane cargoPlane = new CargoPlane("CP", ID, Serial, ISOCC, Model, MaxLoad);
+            StaticProductLists.cargoPlanes.Add(cargoPlane);
+            return cargoPlane;
         }
     }
     class PassengerGenerator : Generator
@@ -83,10 +90,12 @@ namespace OOD_Proj_1
             string Email = words[5];
             string Class = words[6];
             UInt64 Miles = UInt64.Parse(words[7]);
-            return new Passenger(Type, ID, Name, Age, Phone, Email, Class, Miles);
+            Passenger passenger = new Passenger(Type, ID, Name, Age, Phone, Email, Class, Miles);
+            StaticProductLists.passengers.Add(passenger);
+            return passenger;
         }
 
-        public override void Create(Message message)
+        public override Passenger Create(Message message)
         {
             UInt64 ID = BitConverter.ToUInt64(message.MessageBytes, 7);
             UInt16 NL = BitConverter.ToUInt16(message.MessageBytes, 15);
@@ -97,7 +106,9 @@ namespace OOD_Proj_1
             string Email = Encoding.ASCII.GetString(message.MessageBytes[(33 + NL)..(33 + NL + EL)]);
             char Class = Encoding.ASCII.GetChars(message.MessageBytes[(33 + NL + EL)..(34 + NL + EL)])[0];
             UInt64 Miles = BitConverter.ToUInt64(message.MessageBytes[(34 + NL + EL)..(42 + EL + NL)]);
-            ProductList.Products.Add(new Passenger("P", ID, Name, Age, Phone, Email, Class.ToString(), Miles));
+            Passenger passenger = new Passenger("P", ID, Name, Age, Phone, Email, Class.ToString(), Miles);
+            StaticProductLists.passengers.Add(passenger);
+            return passenger;
         }
     }
     class CrewGenerator : Generator
@@ -112,9 +123,11 @@ namespace OOD_Proj_1
             string Email = words[5];
             UInt16 Practice = UInt16.Parse(words[6]);
             string Role = words[7];
-            return new Crew(Type, ID, Name, Age, Phone, Email, Practice, Role);
+            Crew crew = new Crew(Type, ID, Name, Age, Phone, Email, Practice, Role);
+            StaticProductLists.crews.Add(crew);
+            return crew;
         }
-        public override void Create(Message message)
+        public override Crew Create(Message message)
         {
             UInt64 ID = BitConverter.ToUInt64(message.MessageBytes[7..15]);
             UInt16 NL = BitConverter.ToUInt16(message.MessageBytes[15..17]);
@@ -125,7 +138,9 @@ namespace OOD_Proj_1
             string Email = Encoding.ASCII.GetString(message.MessageBytes[(33 + NL)..(33 + NL + EL)]);
             UInt16 Practice = BitConverter.ToUInt16(message.MessageBytes[(33 + NL + EL)..(35 + EL + NL)]);
             char Role = Encoding.ASCII.GetChars(message.MessageBytes[(35 + NL + EL)..(36 + NL + EL)])[0];
-            ProductList.Products.Add(new Crew("C", ID, Name, Age, Phone, Email, Practice, Role.ToString()));
+            Crew crew = new Crew("C", ID, Name, Age, Phone, Email, Practice, Role.ToString());
+            StaticProductLists.crews.Add(crew);
+            return crew;
         }
 
     }
@@ -138,9 +153,11 @@ namespace OOD_Proj_1
             Single Weight = Single.Parse(words[2], culture);
             string Code = words[3];
             string Description = words[4];
-            return new Cargo(Type, ID, Weight, Code, Description);
+            Cargo cargo = new Cargo("CA", ID, Weight, Code, Description);
+            StaticProductLists.cargos.Add(cargo);
+            return cargo;
         }
-        public override void Create(Message message)
+        public override Cargo Create(Message message)
         {
             UInt16 ID = BitConverter.ToUInt16(message.MessageBytes[7..15]);
             UInt16 NL = BitConverter.ToUInt16(message.MessageBytes[15..17]);
@@ -148,7 +165,9 @@ namespace OOD_Proj_1
             string Code = Encoding.ASCII.GetString(message.MessageBytes[19..25]);
             UInt16 DL = BitConverter.ToUInt16(message.MessageBytes[25..27]);
             string Description = Encoding.ASCII.GetString(message.MessageBytes[27..(27 + DL)]);
-            ProductList.Products.Add(new Cargo("CA", ID, Weight, Code, Description));
+            Cargo cargo = new Cargo("CA", ID, Weight, Code, Description);
+            StaticProductLists.cargos.Add(cargo);
+            return cargo;
         }
     }
     class AirportGenerator : Generator
@@ -159,15 +178,15 @@ namespace OOD_Proj_1
             UInt64 ID = UInt64.Parse(words[1]);
             string Name = words[2];
             string Code = words[3];
-            Single Longitude = Single.Parse(words[4]);
-            Single Latitude = Single.Parse(words[5]);
-            Single AMSL = Single.Parse(words[6]);
+            Single Longitude = Single.Parse(words[4], culture);
+            Single Latitude = Single.Parse(words[5], culture);
+            Single AMSL = Single.Parse(words[6], culture);
             string Country = words[7];
             Airport airport =  new Airport(type, ID, Name, Code, Longitude, Latitude, AMSL, Country);
             StaticProductLists.airports.Add(airport);
             return airport;
         }
-        public override void Create(Message message)
+        public override Airport Create(Message message)
         {
             UInt64 ID = BitConverter.ToUInt64(message.MessageBytes[7..15]);
             UInt16 NL = BitConverter.ToUInt16(message.MessageBytes[15..17]);
@@ -179,7 +198,7 @@ namespace OOD_Proj_1
             string ISOCC = Encoding.ASCII.GetString(message.MessageBytes[(32 + NL)..(35 + NL)]);
             Airport airport = new Airport("AI", ID, Name, Code, Longitude, Latitude, AMSL, ISOCC);
             StaticProductLists.airports.Add(airport);
-            ProductList.Products.Add(airport);
+            return airport;
         }
     }
     class FlightGenerator : Generator
@@ -203,7 +222,7 @@ namespace OOD_Proj_1
             return fligth;
 
         }
-        public override void Create(Message message)
+        public override Fligth Create(Message message)
         {
             UInt64 ID = BitConverter.ToUInt64(message.MessageBytes, 7);
             UInt64 OriginID = BitConverter.ToUInt64(message.MessageBytes[15..23]);
@@ -228,8 +247,8 @@ namespace OOD_Proj_1
                 Load.Add(BitConverter.ToUInt64(message.MessageBytes, temp));
             }
             Fligth fligth = new Fligth("FL", ID, OriginID, TargetID, TO, LD, 0, 0, 0, PlaneID, Crew, Load);
-            ProductList.Products.Add(fligth);
             StaticProductLists.fligths.Add(fligth);
+            return fligth;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace OOD_Proj_1
         public static Dictionary<string, Action> menuDict = new Dictionary<string, Action>()
             {
                 { "print", serializator.Serialize },
-                {"gui", GuiApp.StartGUI },
+                { "gui", GuiApp.StartGUI },
                 { "exit", ServerSimulator.StopServer }
             };
         public static void StartMenu()

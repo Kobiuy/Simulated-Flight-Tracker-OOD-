@@ -27,7 +27,7 @@ namespace OOD_Proj_1
         }
         public void Serialize()
         {
-            Serialize(ProductList.Products);
+            Serialize(StaticProductLists.GetAllDataList());
         }
     }
     public abstract class Serializator // Class inherited by classes serializing data
