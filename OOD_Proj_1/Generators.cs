@@ -177,7 +177,7 @@ namespace OOD_Proj_1
             Single Latitude = Single.Parse(words[5], culture);
             Single AMSL = Single.Parse(words[6], culture);
             string Country = words[7];
-            Airport airport =  new Airport(type, ID, Name, Code, Longitude, Latitude, AMSL, Country);
+            Airport airport = new Airport(type, ID, Name, Code, Longitude, Latitude, AMSL, Country);
             StaticProductLists.airports.Add(airport);
             return airport;
         }

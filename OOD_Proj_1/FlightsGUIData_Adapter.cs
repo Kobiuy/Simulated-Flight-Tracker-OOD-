@@ -19,7 +19,6 @@ namespace OOD_Proj_1
         {
             fligths = NewFlights;
         }
-
         public void UpdateAirports(List<Airport> NewAirports)
         {
             airports = new Dictionary<UInt64, Airport>();
@@ -30,12 +29,10 @@ namespace OOD_Proj_1
         {
             return fligths.Count;
         }
-
         public override UInt64 GetID(int index)
         {
             return fligths[index].ID;
         }
-
         public override WorldPosition GetPosition(int index)
         {
             WorldPosition wps = new WorldPosition();
@@ -49,7 +46,6 @@ namespace OOD_Proj_1
             wps.Latitude = start.Latitude + (target.Latitude - start.Latitude) * GetProgress(fligths[index], toftime, lndtime, nwtime);
             return wps;
         }
-
         public override double GetRotation(int index)
         {
             Airport start = airports[fligths[index].OriginAsID];
@@ -58,6 +54,7 @@ namespace OOD_Proj_1
             MPoint targetPoint = new MPoint(target.Longitude, target.Latitude);
             startPoint = SphericalMercator.FromLonLat(startPoint);
             targetPoint = SphericalMercator.FromLonLat(targetPoint);
+
             MPoint v = new MPoint(targetPoint - startPoint);
             MPoint w = new MPoint(0, 1);
             return Math.Atan2(w.Y * v.X - w.X * v.Y, w.X * v.X + w.Y * v.Y);
