@@ -85,10 +85,7 @@ namespace OOD_Proj_1
             b = (lndtime - toftime);
 
             double progress = a / b;
-            /*if (progress > 1 || progress < 0) // Debugging help
-            {
-                Console.WriteLine("Put BreakPoint Here");
-            }*/
+
             return progress;
         }
     }

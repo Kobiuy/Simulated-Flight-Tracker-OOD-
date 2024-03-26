@@ -11,13 +11,7 @@ namespace OOD_Proj_1
     {
         public static void StartGUI()
         {
-            //if (ServerSimulator.ServerThread!=null && ServerSimulator.ServerThread.IsAlive)
-            //{
-            //    Console.WriteLine("Waiting for the end of downloading data from server");
-            //    while (ServerSimulator.ServerThread.IsAlive) { }
-            //}
             GuiLogic();
-
         }
 
         private static void GuiLogic()
