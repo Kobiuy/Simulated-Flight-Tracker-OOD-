@@ -13,13 +13,13 @@ namespace OOD_Proj_1
             {
                 { "print", serializator.Serialize },
                 { "gui", GuiApp.StartGUI },
-                { "exit", ServerSimulator.StopServer }
+                { "exit", StopAll }
             };
         public static void StartMenu()
         {
             string UserInput = "";
             Action method;
-            Console.WriteLine("Write \"print\" to make a snapshot, \"gui\" for GUI or \"exit\" to exit");
+            Console.WriteLine("Write \"print\" to make a snapshot, \"gui\" for GUI or \"exit\" to exit menu");
             while (UserInput != "exit")
             {
                 UserInput = Console.ReadLine();
@@ -32,6 +32,12 @@ namespace OOD_Proj_1
                     Console.WriteLine($"[{UserInput}] nie jest poprawną komendą");
                 }
             }
+        }
+        public static void StopAll()
+        {
+            ServerSimulator.StopServer();
+            if (GuiApp.UpdateGuiThread.IsAlive)
+                Console.WriteLine("In order to fully exit application close GUI");
         }
     }
 }

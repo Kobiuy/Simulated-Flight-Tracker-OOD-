@@ -38,7 +38,6 @@ namespace OOD_Proj_1
 
         public override WorldPosition GetPosition(int index)
         {
-
             WorldPosition wps = new WorldPosition();
             Airport start = airports[fligths[index].OriginAsID];
             Airport target = airports[fligths[index].TargetAsID];
@@ -83,7 +82,6 @@ namespace OOD_Proj_1
             }
             a = (nwtime - toftime);
             b = (lndtime - toftime);
-
             double progress = a / b;
 
             return progress;

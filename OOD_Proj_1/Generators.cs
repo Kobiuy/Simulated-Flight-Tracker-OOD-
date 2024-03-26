@@ -33,8 +33,6 @@ namespace OOD_Proj_1
             StaticProductLists.passengerPlanes.Add(passengerPlane);
             return passengerPlane;
         }
-
-
         public override PassengerPlane Create(Message message)
         {
             UInt16 ID = BitConverter.ToUInt16(message.MessageBytes[7..15]);
@@ -64,7 +62,6 @@ namespace OOD_Proj_1
             StaticProductLists.cargoPlanes.Add(cargoPlane);
             return cargoPlane;
         }
-
         public override CargoPlane Create(Message message)
         {
             UInt16 ID = BitConverter.ToUInt16(message.MessageBytes[7..15]);
@@ -94,7 +91,6 @@ namespace OOD_Proj_1
             StaticProductLists.passengers.Add(passenger);
             return passenger;
         }
-
         public override Passenger Create(Message message)
         {
             UInt64 ID = BitConverter.ToUInt64(message.MessageBytes, 7);
@@ -142,7 +138,6 @@ namespace OOD_Proj_1
             StaticProductLists.crews.Add(crew);
             return crew;
         }
-
     }
     class CargoGenerator : Generator
     {
@@ -220,7 +215,6 @@ namespace OOD_Proj_1
             Fligth fligth = new Fligth(type, ID, OriginAsID, TargetAsID, TakeOffTime, LandingTime, Longitude, Latitude, AMSL, PlaneID, CrewAsIDs, LoadAsIDs);
             StaticProductLists.fligths.Add(fligth);
             return fligth;
-
         }
         public override Fligth Create(Message message)
         {

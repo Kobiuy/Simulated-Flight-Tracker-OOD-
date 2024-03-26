@@ -9,21 +9,32 @@ namespace OOD_Proj_1
 {
     public static class GuiApp
     {
+        public static Thread UpdateGuiThread;
         public static void StartGUI()
         {
-            GuiLogic();
-        }
+            Thread RunnerThread = new Thread(Runner.Run);
+            RunnerThread.Start();
 
-        private static void GuiLogic()
+            UpdateGuiThread = new Thread(new ThreadStart(() =>
+            {
+                try
+                {
+                    UpdatingGui(RunnerThread);
+                }
+                catch (ThreadInterruptedException ex) { }
+            }));
+
+            UpdateGuiThread.Start();
+        }
+        private static void UpdatingGui(Thread RunnerThread)
         {
-            Thread GuiThread = new Thread(Runner.Run);
-            GuiThread.Start();
             Adapter adapter = new Adapter();
             adapter.UpdateFlights(StaticProductLists.fligths);
             adapter.UpdateAirports(StaticProductLists.airports);
-            while (GuiThread.IsAlive)
+            while (RunnerThread.IsAlive)
             {
                 Runner.UpdateGUI(adapter);
+                Thread.Sleep(1000);
             }
         }
     }
