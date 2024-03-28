@@ -10,6 +10,17 @@ using Mapsui;
 using System;
 namespace OOD_Proj_1
 {
+    public abstract class Media()
+    {
+        public abstract void doForArp();
+        public abstract void doForPP();
+        public abstract void doForCP();
+    }
+    public interface IReportable
+    {
+        public void Accept(Media medium);
+    }
+
     internal class Program
     {
         static void Main(string[] args)

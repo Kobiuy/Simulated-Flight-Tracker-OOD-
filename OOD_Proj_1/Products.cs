@@ -52,7 +52,7 @@ namespace OOD_Proj_1
         public string Country { get; set; }
         public string Model { get; set; }
     }
-    public class CargoPlane : Plane
+    public class CargoPlane : Plane, IReportable
     {
         public CargoPlane() { }
         public Single MaxLoad { get; set; }
@@ -66,8 +66,13 @@ namespace OOD_Proj_1
             Model = model;
             MaxLoad = maxload;
         }
+
+        public void Accept(Media medium)
+        {
+            medium.doForCP();
+        }
     }
-    public class PassengerPlane : Plane
+    public class PassengerPlane : Plane, IReportable
     {
         public PassengerPlane() { }
         public UInt16 FirstClassSize { get; set; }
@@ -84,6 +89,11 @@ namespace OOD_Proj_1
             FirstClassSize = fcs;
             BusinessClassSize = bcs;
             EconomyClassSize = ecs;
+        }
+
+        public void Accept(Media medium)
+        {
+            medium.doForPP();
         }
     }
     public class Passenger : Person
@@ -137,7 +147,7 @@ namespace OOD_Proj_1
             Description = description;
         }
     }
-    public class Airport : Product
+    public class Airport : Product, IReportable
     {
         public Airport() { }
         public string Name { get; set; }
@@ -157,6 +167,11 @@ namespace OOD_Proj_1
             Latitude = latitude;
             AMSL = amsl;
             Country = country;
+        }
+
+        public void Accept(Media medium)
+        {
+            medium.doForArp();
         }
     }
     public class Fligth : Product
