@@ -12,24 +12,24 @@ namespace OOD_Proj_1
     public static class Menu
     {
         public static SerializeData serializator = new SerializeData();
-        public static Dictionary<string, Action> menuDict = new Dictionary<string, Action>()
+        public static Dictionary<string, Action<ProductLists>> menuDict = new Dictionary<string, Action<ProductLists>>()
             {
                 { "print", serializator.Serialize },
                 { "gui", GuiApp.StartGUI },
-                {"report", ()=>(new Reporter()).Report()},
+                {"report", (ProductLists p)=>(new Reporter()).Report(p)},
                 { "exit", StopAll }
             };
-        public static void StartMenu()
+        public static void StartMenu(ProductLists productLists)
         {
             string UserInput = "";
-            Action method;
+            Action<ProductLists> method;
             Console.WriteLine("Write \"print\" to make a snapshot, \"gui\" for GUI, \"report\" or \"exit\" to exit menu");
             while (UserInput != "exit")
             {
                 UserInput = Console.ReadLine();
                 if (menuDict.TryGetValue(UserInput, out method))
                 {
-                    method();
+                    method(productLists);
                 }
                 else
                 {
@@ -37,7 +37,7 @@ namespace OOD_Proj_1
                 }
             }
         }
-        public static void StopAll()
+        public static void StopAll(ProductLists p)
         {
             ServerSimulator.StopServer();
             if (GuiApp.UpdateGuiThread!=null && GuiApp.UpdateGuiThread.IsAlive)

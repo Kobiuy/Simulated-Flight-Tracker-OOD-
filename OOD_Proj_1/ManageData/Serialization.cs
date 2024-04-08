@@ -14,21 +14,21 @@ namespace OOD_Proj_1.ManageData
         {
             { "JSON", new JsonSerializator() },
         };
-        public void Serialize(List<Product> products)
+        public void Serialize(ProductLists products)
         {
             try
             {
-                serializators[Settings.SerializationType].Serialize(products);
+                serializators[Settings.SerializationType].Serialize(products.GetAllDataList());
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
         }
-        public void Serialize()
+        /*public void Serialize()
         {
             Serialize(StaticProductLists.GetAllDataList());
-        }
+        }*/
     }
     public abstract class Serializator // Class inherited by classes serializing data
     {

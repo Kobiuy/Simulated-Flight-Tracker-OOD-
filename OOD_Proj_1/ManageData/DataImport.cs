@@ -18,19 +18,19 @@ namespace OOD_Proj_1.ManageData
             { "FILE", new FileImporter() },
             { "SIM_SERVER", new ServerImporter() },
         };
-        public List<Product> ImportData()
+        public List<Product> ImportData(ProductLists productLists)
         {
-            return Importers[Settings.DataSource].Import();
+            return Importers[Settings.DataSource].Import(productLists);
         }
     }
     public abstract class Importer // Class inherited by classes importing data
     {
         protected Factory factory = new();
-        abstract public List<Product> Import();
+        abstract public List<Product> Import(ProductLists productLists);
     }
     public class FileImporter : Importer
     {
-        public override List<Product> Import()
+        public override List<Product> Import(ProductLists productLists)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace OOD_Proj_1.ManageData
                 {
                     while (!sr.EndOfStream)
                     {
-                        factory.Create(sr.ReadLine());
+                        factory.Create(sr.ReadLine(), productLists);
                     }
                 }
             }
@@ -56,18 +56,19 @@ namespace OOD_Proj_1.ManageData
             {
                 Console.WriteLine(e.Message);
             }
-            return StaticProductLists.GetAllDataList();
+            return productLists.GetAllDataList();
         }
     }
     public class ServerImporter : Importer
     {
-        public override List<Product> Import()
+        public override List<Product> Import(ProductLists productLists)
         {
-            ServerSimulator.StartServer();
-            return StaticProductLists.GetAllDataList();
+            ServerSimulator.StartServer(productLists);
+            return productLists.GetAllDataList();
+            //return StaticProductLists.GetAllDataList();
         }
 
-        public void ParseMessage(Message message)
+        public void ParseMessage(Message message, ProductLists productLists)
         {
             Dictionary<string, Generator> builders = new Dictionary<string, Generator>()
             {
@@ -80,7 +81,7 @@ namespace OOD_Proj_1.ManageData
                             { "NFL", new FlightGenerator() },
             };
 
-            builders[Encoding.ASCII.GetString(message.MessageBytes[0..3])].Create(message);
+            builders[Encoding.ASCII.GetString(message.MessageBytes[0..3])].Create(message, productLists);
         }
     }
 }

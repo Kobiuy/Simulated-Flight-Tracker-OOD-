@@ -16,9 +16,10 @@ namespace OOD_Proj_1
     {
         static void Main(string[] args)
         {
+            ProductLists productLists = new ProductLists();
             DataImporter importer = new DataImporter();
-            importer.ImportData();
-            Menu.StartMenu();
+            importer.ImportData(productLists); // TO FINISH
+            Menu.StartMenu(productLists);
         }
     }
 }

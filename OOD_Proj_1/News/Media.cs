@@ -75,7 +75,7 @@ namespace OOD_Proj_1.News
 
     public class Reporter
     {
-        public void Report()
+        public void Report(ProductLists productLists)
         {
             List<Media> medias = new List<Media>
             {
@@ -87,9 +87,12 @@ namespace OOD_Proj_1.News
                 new Newspaper("Dziennik Politechniczny")
             };
             List<IReportable> reportables = new List<IReportable>();
-            reportables.AddRange(StaticProductLists.airports);
+            /*reportables.AddRange(StaticProductLists.airports);
             reportables.AddRange(StaticProductLists.passengerPlanes);
-            reportables.AddRange(StaticProductLists.cargoPlanes);
+            reportables.AddRange(StaticProductLists.cargoPlanes);*/
+            reportables.AddRange(productLists.airports);
+            reportables.AddRange(productLists.passengerPlanes);
+            reportables.AddRange(productLists.cargoPlanes);
             NewsGenerator newsGenerator = new NewsGenerator(medias, reportables);
             string news;
             while ((news = newsGenerator.GenerateNews()) != null) { Console.WriteLine(news); }

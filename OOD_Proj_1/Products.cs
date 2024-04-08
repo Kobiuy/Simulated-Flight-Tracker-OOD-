@@ -21,10 +21,10 @@ namespace OOD_Proj_1
             {"AI", new AirportGenerator() },
             {"FL", new FlightGenerator() },
         };
-        public Product Create(string txt)
+        public Product Create(string txt, ProductLists productLists)
         {
             string[] words = txt.Split(',');
-            return generators[words[0]].Create(words);
+            return generators[words[0]].Create(words, productLists);
         }
     }
 

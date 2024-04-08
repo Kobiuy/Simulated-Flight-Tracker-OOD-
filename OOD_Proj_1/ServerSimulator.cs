@@ -11,14 +11,14 @@ namespace OOD_Proj_1
     public static class ServerSimulator
     {
         public static Thread ServerThread;
-        public static void StartServer()
+        public static void StartServer(ProductLists productLists)
         {
             NetworkSourceSimulator.NetworkSourceSimulator simulator = new NetworkSourceSimulator.NetworkSourceSimulator(Settings.FileName, Settings.SimMin, Settings.SimMax);
             ServerImporter serverImporter = new ServerImporter();
             simulator.OnNewDataReady += (object sender, NewDataReadyArgs args) =>
             {
                 Message message = simulator.GetMessageAt(args.MessageIndex);
-                serverImporter.ParseMessage(message);
+                serverImporter.ParseMessage(message, productLists);
             };
 
             ServerThread = new Thread(new ThreadStart(() =>
