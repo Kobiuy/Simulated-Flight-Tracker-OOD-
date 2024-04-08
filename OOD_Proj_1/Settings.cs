@@ -12,6 +12,6 @@ namespace OOD_Proj_1
         public const string DataSource = "SIM_SERVER"; // Choose from ["FILE", "SIM_SERVER"]
         public const string FileName = "example_data.ftr"; // Set source file name
         public const int SimMin = 0; // Set minimum time between messages 
-        public const int SimMax = 1; // Set maximum time between messages 
+        public const int SimMax = 0; // Set maximum time between messages 
     }
 }

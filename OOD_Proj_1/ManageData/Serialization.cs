@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace OOD_Proj_1
+namespace OOD_Proj_1.ManageData
 {
     public class SerializeData
     {

@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 using NetTopologySuite.Index.Strtree;
 using System.Collections;
 
-namespace OOD_Proj_1
+namespace OOD_Proj_1.Gui
 {
     public class Adapter : FlightsGUIData
     {
         private List<Fligth> fligths;
-        private Dictionary<UInt64, Airport> airports = new Dictionary<UInt64, Airport>();
+        private Dictionary<ulong, Airport> airports = new Dictionary<ulong, Airport>();
 
         public void UpdateFlights(List<Fligth> NewFlights)
         {
@@ -21,7 +21,7 @@ namespace OOD_Proj_1
         }
         public void UpdateAirports(List<Airport> NewAirports)
         {
-            airports = new Dictionary<UInt64, Airport>();
+            airports = new Dictionary<ulong, Airport>();
             foreach (Airport Airport in NewAirports)
                 airports.Add(Airport.ID, Airport);
         }
@@ -29,7 +29,7 @@ namespace OOD_Proj_1
         {
             return fligths.Count;
         }
-        public override UInt64 GetID(int index)
+        public override ulong GetID(int index)
         {
             return fligths[index].ID;
         }
@@ -77,8 +77,8 @@ namespace OOD_Proj_1
                 else
                     lndtime += 24 * 60 * 60; // Add one day
             }
-            a = (nwtime - toftime);
-            b = (lndtime - toftime);
+            a = nwtime - toftime;
+            b = lndtime - toftime;
             double progress = a / b;
 
             return progress;

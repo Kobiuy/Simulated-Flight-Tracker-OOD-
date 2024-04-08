@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Text.Json.Serialization;
 using System.Xml.Linq;
 using System.Xml.Schema;
+using OOD_Proj_1.News;
 
 namespace OOD_Proj_1
 {
@@ -34,6 +35,10 @@ namespace OOD_Proj_1
     [JsonDerivedType(typeof(Cargo), "CA")]
     [JsonDerivedType(typeof(Airport), "AI")]
     [JsonDerivedType(typeof(Fligth), "FL")]
+    public interface IReportable
+    {
+        public string Accept(Media medium);
+    }
     public abstract class Product // Base class of objects created by "Factory"
     {
         public string Type { get; set; }
@@ -67,9 +72,9 @@ namespace OOD_Proj_1
             MaxLoad = maxload;
         }
 
-        public void Accept(Media medium)
+        public string Accept(Media medium)
         {
-            medium.doForCP();
+            return medium.doForCP(this);
         }
     }
     public class PassengerPlane : Plane, IReportable
@@ -91,9 +96,9 @@ namespace OOD_Proj_1
             EconomyClassSize = ecs;
         }
 
-        public void Accept(Media medium)
+        public string Accept(Media medium)
         {
-            medium.doForPP();
+            return medium.doForPP(this);
         }
     }
     public class Passenger : Person
@@ -169,9 +174,9 @@ namespace OOD_Proj_1
             Country = country;
         }
 
-        public void Accept(Media medium)
+        public string Accept(Media medium)
         {
-            medium.doForArp();
+            return medium.doForArp(this);
         }
     }
     public class Fligth : Product

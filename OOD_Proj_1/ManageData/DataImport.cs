@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace OOD_Proj_1
+namespace OOD_Proj_1.ManageData
 {
     public class DataImporter
     {

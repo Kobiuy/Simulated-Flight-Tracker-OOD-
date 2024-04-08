@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OOD_Proj_1.Gui;
+using OOD_Proj_1.ManageData;
+using OOD_Proj_1.News;
 
 namespace OOD_Proj_1
 {
@@ -13,13 +16,14 @@ namespace OOD_Proj_1
             {
                 { "print", serializator.Serialize },
                 { "gui", GuiApp.StartGUI },
+                {"report", ()=>(new Reporter()).Report()},
                 { "exit", StopAll }
             };
         public static void StartMenu()
         {
             string UserInput = "";
             Action method;
-            Console.WriteLine("Write \"print\" to make a snapshot, \"gui\" for GUI or \"exit\" to exit menu");
+            Console.WriteLine("Write \"print\" to make a snapshot, \"gui\" for GUI, \"report\" or \"exit\" to exit menu");
             while (UserInput != "exit")
             {
                 UserInput = Console.ReadLine();
@@ -36,7 +40,7 @@ namespace OOD_Proj_1
         public static void StopAll()
         {
             ServerSimulator.StopServer();
-            if (GuiApp.UpdateGuiThread.IsAlive)
+            if (GuiApp.UpdateGuiThread!=null && GuiApp.UpdateGuiThread.IsAlive)
                 Console.WriteLine("In order to fully exit application close GUI");
         }
     }
