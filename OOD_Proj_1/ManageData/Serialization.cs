@@ -25,10 +25,6 @@ namespace OOD_Proj_1.ManageData
                 Console.WriteLine(e.Message);
             }
         }
-        /*public void Serialize()
-        {
-            Serialize(StaticProductLists.GetAllDataList());
-        }*/
     }
     public abstract class Serializator // Class inherited by classes serializing data
     {

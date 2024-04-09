@@ -19,17 +19,17 @@ namespace OOD_Proj_1.News
         public Television(string name) { Name = name; }
         public override string doForArp(Airport airport)
         {
-            return ($"An image of {airport.Name} airport");
+            return ($"<An image of {airport.Name} airport>");
         }
 
         public override string doForCP(CargoPlane cargoPlane)
         {
-            return ($"An image of {cargoPlane.Serial} cargo plane");
+            return ($"<An image of {cargoPlane.Serial} cargo plane>");
         }
 
         public override string doForPP(PassengerPlane passengerPlane)
         {
-            return ($"An image of {passengerPlane.Serial} passenger plane");
+            return ($"<An image of {passengerPlane.Serial} passenger plane>");
         }
     }
 
@@ -87,9 +87,6 @@ namespace OOD_Proj_1.News
                 new Newspaper("Dziennik Politechniczny")
             };
             List<IReportable> reportables = new List<IReportable>();
-            /*reportables.AddRange(StaticProductLists.airports);
-            reportables.AddRange(StaticProductLists.passengerPlanes);
-            reportables.AddRange(StaticProductLists.cargoPlanes);*/
             reportables.AddRange(productLists.airports);
             reportables.AddRange(productLists.passengerPlanes);
             reportables.AddRange(productLists.cargoPlanes);

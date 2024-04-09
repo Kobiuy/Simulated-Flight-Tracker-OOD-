@@ -18,7 +18,7 @@ namespace OOD_Proj_1
         {
             ProductLists productLists = new ProductLists();
             DataImporter importer = new DataImporter();
-            importer.ImportData(productLists); // TO FINISH
+            importer.ImportData(productLists);
             Menu.StartMenu(productLists);
         }
     }

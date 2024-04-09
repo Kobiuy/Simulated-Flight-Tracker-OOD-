@@ -65,7 +65,6 @@ namespace OOD_Proj_1.ManageData
         {
             ServerSimulator.StartServer(productLists);
             return productLists.GetAllDataList();
-            //return StaticProductLists.GetAllDataList();
         }
 
         public void ParseMessage(Message message, ProductLists productLists)
