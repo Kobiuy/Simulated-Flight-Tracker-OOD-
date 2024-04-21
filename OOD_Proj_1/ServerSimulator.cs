@@ -11,15 +11,20 @@ namespace OOD_Proj_1
     public static class ServerSimulator
     {
         public static Thread ServerThread;
-        public static void StartServer(ProductLists productLists)
+        public static ProductLists productLists;
+        public static void StartServer(ProductLists PL)
         {
-            NetworkSourceSimulator.NetworkSourceSimulator simulator = new NetworkSourceSimulator.NetworkSourceSimulator(Settings.FileName, Settings.SimMin, Settings.SimMax);
+            productLists = PL;
+            NetworkSourceSimulator.NetworkSourceSimulator simulator = new NetworkSourceSimulator.NetworkSourceSimulator(Settings.UpdatesFileName, Settings.SimMin, Settings.SimMax);
             ServerImporter serverImporter = new ServerImporter();
             simulator.OnNewDataReady += (object sender, NewDataReadyArgs args) =>
             {
                 Message message = simulator.GetMessageAt(args.MessageIndex);
                 serverImporter.ParseMessage(message, productLists);
             };
+            simulator.OnIDUpdate += Simulator_OnIDUpdate;
+            simulator.OnPositionUpdate += Simulator_OnPositionUpdate;
+            simulator.OnContactInfoUpdate += Simulator_OnContactInfoUpdate;
 
             ServerThread = new Thread(new ThreadStart(() =>
             {
@@ -31,6 +36,53 @@ namespace OOD_Proj_1
             }));
             ServerThread.Start();
         }
+
+        private static void Simulator_OnContactInfoUpdate(object sender, ContactInfoUpdateArgs args)
+        {
+            foreach (var person in productLists.passengers)
+            {
+                if (person.ID == args.ObjectID)
+                {
+                    person.Email = args.EmailAddress;
+                    person.Phone = args.PhoneNumber;
+                    break;
+                }
+            }
+            foreach (var person in productLists.crews)
+            {
+                if (person.ID == args.ObjectID)
+                {
+                    person.Email = args.EmailAddress;
+                    person.Phone = args.PhoneNumber;
+                    break;
+                }
+            }
+
+        }
+        private static void Simulator_OnIDUpdate(object sender, IDUpdateArgs args)
+        {
+            foreach (var product in productLists.GetAllDataList())
+            {
+                if (product.ID == args.ObjectID)
+                {
+                    product.ID = args.NewObjectID;
+                }
+            }
+        }
+        private static void Simulator_OnPositionUpdate(object sender, PositionUpdateArgs args)
+        {
+            foreach (var flight in productLists.fligths)
+            {
+                if (flight.ID == args.ObjectID)
+                {
+                    flight.AMSL = args.AMSL;
+                    flight.Longitude = args.Longitude;
+                    flight.Latitude = args.Latitude;
+                    break;
+                }
+            }
+        }
+
         public static void StopServer()
         {
             if (ServerThread != null)

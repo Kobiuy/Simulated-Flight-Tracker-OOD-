@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NetTopologySuite.Index.Strtree;
 using System.Collections;
+using ExCSS;
 
 namespace OOD_Proj_1.Gui
 {
@@ -35,6 +36,7 @@ namespace OOD_Proj_1.Gui
         }
         public override WorldPosition GetPosition(int index)
         {
+            
             WorldPosition wps = new WorldPosition();
             Airport start = airports[fligths[index].OriginAsID];
             Airport target = airports[fligths[index].TargetAsID];
@@ -44,6 +46,10 @@ namespace OOD_Proj_1.Gui
 
             wps.Longitude = start.Longitude + (target.Longitude - start.Longitude) * GetProgress(fligths[index], toftime, lndtime, nwtime);
             wps.Latitude = start.Latitude + (target.Latitude - start.Latitude) * GetProgress(fligths[index], toftime, lndtime, nwtime);
+            wps.Latitude = fligths[index].Latitude;
+            wps.Longitude = fligths[index].Longitude;
+            fligths[index].Longitude = (float)wps.Longitude;
+            fligths[index].Latitude = (float)wps.Latitude;
             return wps;
         }
         public override double GetRotation(int index)

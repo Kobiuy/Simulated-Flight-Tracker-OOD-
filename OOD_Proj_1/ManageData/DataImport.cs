@@ -17,6 +17,7 @@ namespace OOD_Proj_1.ManageData
         {
             { "FILE", new FileImporter() },
             { "SIM_SERVER", new ServerImporter() },
+            {"FILEwUPDATES", new FileAndServerImporter() },
         };
         public List<Product> ImportData(ProductLists productLists)
         {
@@ -81,6 +82,18 @@ namespace OOD_Proj_1.ManageData
             };
 
             builders[Encoding.ASCII.GetString(message.MessageBytes[0..3])].Create(message, productLists);
+        }
+    }
+    public class FileAndServerImporter : Importer
+    {
+        
+        public override List<Product> Import(ProductLists productLists)
+        {
+            FileImporter fileImporter = new FileImporter();
+            fileImporter.Import(productLists);
+            ServerImporter serverImporter = new ServerImporter();
+            serverImporter.Import(productLists);
+            return productLists.GetAllDataList();
         }
     }
 }
