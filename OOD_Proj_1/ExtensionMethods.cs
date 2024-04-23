@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OOD_Proj_1.ManageData;
+using OOD_Proj_1.Products;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,5 +29,23 @@ namespace OOD_Proj_1
             return UInt64List;
         }
     }
+    public static class DictionaryExtension
+    {
+        public static bool UpdateKeyAndID<TValue>(this IDictionary<UInt64, TValue> dict, UInt64 From, UInt64 To) where TValue : Product
+        {
+            if (dict.ContainsKey(From))
+            {
+                TValue value = dict[From];
+                value.ID = To;
+                dict.Remove(From);
+                dict.Add(To, value);
+                LogManager.ChangedID(From, To);
+                return true;
+            }
+            return false;
+        }
+
+    }
+
 
 }

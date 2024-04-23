@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOD_Proj_1
+namespace OOD_Proj_1.Products
 {
     public class ProductLists
     {
@@ -25,7 +25,7 @@ namespace OOD_Proj_1
         public List<Fligth> fligths = new List<Fligth>();
         public List<Airport> airports = new List<Airport>();
         */
-        
+
         public List<Product> GetAllDataList()
         {
             List<Product> result = new List<Product>();

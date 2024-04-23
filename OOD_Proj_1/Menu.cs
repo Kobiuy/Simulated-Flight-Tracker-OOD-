@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using OOD_Proj_1.Gui;
 using OOD_Proj_1.ManageData;
 using OOD_Proj_1.News;
+using OOD_Proj_1.Products;
 
 namespace OOD_Proj_1
 {

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using NetTopologySuite.Index.Strtree;
 using System.Collections;
 using ExCSS;
+using OOD_Proj_1.Products;
 
 namespace OOD_Proj_1.Gui
 {
@@ -35,20 +36,12 @@ namespace OOD_Proj_1.Gui
         }
         public override WorldPosition GetPosition(int index)
         {
-            //// Plan:    Create wrapper class overriding getposition method on a plane.
-            ////          Add get position method to plane class
-            //          Every list should actually be a dictionary 
-            //          Serialize class ProductLists, not just lists
-            //          In case of position change replace item with wrapper
-            
-
             return fligths.ElementAt(index).Value.IteratePosition(airports);
         }
         public override double GetRotation(int index)
         {
             Airport start = airports[fligths.ElementAt(index).Value.OriginAsID];
             Airport target = airports[fligths.ElementAt(index).Value.TargetAsID];
-            //MPoint startPoint = new MPoint(start.Longitude, start.Latitude);
             MPoint startPoint = new MPoint(fligths.ElementAt(index).Value.Longitude, fligths.ElementAt(index).Value.Latitude);
             MPoint targetPoint = new MPoint(target.Longitude, target.Latitude);
             startPoint = SphericalMercator.FromLonLat(startPoint);
