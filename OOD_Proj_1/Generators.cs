@@ -31,7 +31,9 @@ namespace OOD_Proj_1
             UInt16 BusinessClassSize = UInt16.Parse(words[6]);
             UInt16 EconomyClassSize = UInt16.Parse(words[7]);
             PassengerPlane passengerPlane = new PassengerPlane(Type, ID, Serial, Country, Model, FirstClassSize, BusinessClassSize, EconomyClassSize);
-            productLists.passengerPlanes.Add(passengerPlane);
+            //productLists.passengerPlanes.Add(passengerPlane);
+            productLists.passangerPlanesdict.Add(ID, passengerPlane);
+
             return passengerPlane;
         }
         public override PassengerPlane Create(Message message, ProductLists productLists)
@@ -45,7 +47,9 @@ namespace OOD_Proj_1
             UInt16 BusinessClassSize = BitConverter.ToUInt16(message.MessageBytes[(32 + ML)..(34 + ML)]);
             UInt16 EconomyClassSize = BitConverter.ToUInt16(message.MessageBytes[(34 + ML)..(36 + ML)]);
             PassengerPlane passengerPlane = new PassengerPlane("PP", ID, Serial, ISOCC, Model, FirstClassSize, BusinessClassSize, EconomyClassSize);
-            productLists.passengerPlanes.Add(passengerPlane);
+            //productLists.passengerPlanes.Add(passengerPlane);
+            productLists.passangerPlanesdict.Add(ID, passengerPlane);
+
             return passengerPlane;
         }
     }
@@ -60,7 +64,9 @@ namespace OOD_Proj_1
             string Model = words[4];
             Single MaxLoad = Single.Parse(words[5], culture);
             CargoPlane cargoPlane = new CargoPlane(Type, ID, Serial, Country, Model, MaxLoad);
-            productLists.cargoPlanes.Add(cargoPlane);
+            //productLists.cargoPlanes.Add(cargoPlane);
+            productLists.cargoPlanesdict.Add(ID, cargoPlane);
+
             return cargoPlane;
         }
         public override CargoPlane Create(Message message, ProductLists productLists)
@@ -72,7 +78,9 @@ namespace OOD_Proj_1
             string Model = Encoding.ASCII.GetString(message.MessageBytes[30..(30 + ML)]);
             Single MaxLoad = BitConverter.ToSingle(message.MessageBytes[(30 + ML)..(34 + ML)]);
             CargoPlane cargoPlane = new CargoPlane("CP", ID, Serial, ISOCC, Model, MaxLoad);
-            productLists.cargoPlanes.Add(cargoPlane);
+            //productLists.cargoPlanes.Add(cargoPlane);
+            productLists.cargoPlanesdict.Add(ID, cargoPlane);
+
             return cargoPlane;
         }
     }
@@ -89,7 +97,9 @@ namespace OOD_Proj_1
             string Class = words[6];
             UInt64 Miles = UInt64.Parse(words[7]);
             Passenger passenger = new Passenger(Type, ID, Name, Age, Phone, Email, Class, Miles);
-            productLists.passengers.Add(passenger);
+            //productLists.passengers.Add(passenger);
+            productLists.passangersdict.Add(ID, passenger);
+
             return passenger;
         }
         public override Passenger Create(Message message, ProductLists productLists)
@@ -104,7 +114,9 @@ namespace OOD_Proj_1
             char Class = Encoding.ASCII.GetChars(message.MessageBytes[(33 + NL + EL)..(34 + NL + EL)])[0];
             UInt64 Miles = BitConverter.ToUInt64(message.MessageBytes[(34 + NL + EL)..(42 + EL + NL)]);
             Passenger passenger = new Passenger("P", ID, Name, Age, Phone, Email, Class.ToString(), Miles);
-            productLists.passengers.Add(passenger);
+            //productLists.passengers.Add(passenger);
+            productLists.passangersdict.Add(ID, passenger);
+
             return passenger;
         }
     }
@@ -121,7 +133,9 @@ namespace OOD_Proj_1
             UInt16 Practice = UInt16.Parse(words[6]);
             string Role = words[7];
             Crew crew = new Crew(Type, ID, Name, Age, Phone, Email, Practice, Role);
-            productLists.crews.Add(crew);
+            //productLists.crews.Add(crew);
+            productLists.crewsdict.Add(ID, crew);
+
             return crew;
         }
         public override Crew Create(Message message, ProductLists productLists)
@@ -136,7 +150,9 @@ namespace OOD_Proj_1
             UInt16 Practice = BitConverter.ToUInt16(message.MessageBytes[(33 + NL + EL)..(35 + EL + NL)]);
             char Role = Encoding.ASCII.GetChars(message.MessageBytes[(35 + NL + EL)..(36 + NL + EL)])[0];
             Crew crew = new Crew("C", ID, Name, Age, Phone, Email, Practice, Role.ToString());
-            productLists.crews.Add(crew);
+            //productLists.crews.Add(crew);
+            productLists.crewsdict.Add(ID, crew);
+
             return crew;
         }
     }
@@ -150,7 +166,9 @@ namespace OOD_Proj_1
             string Code = words[3];
             string Description = words[4];
             Cargo cargo = new Cargo("CA", ID, Weight, Code, Description);
-            productLists.cargos.Add(cargo);
+            //productLists.cargos.Add(cargo);
+            productLists.cargotsdict.Add(ID, cargo);
+
             return cargo;
         }
         public override Cargo Create(Message message, ProductLists productLists)
@@ -162,7 +180,9 @@ namespace OOD_Proj_1
             UInt16 DL = BitConverter.ToUInt16(message.MessageBytes[25..27]);
             string Description = Encoding.ASCII.GetString(message.MessageBytes[27..(27 + DL)]);
             Cargo cargo = new Cargo("CA", ID, Weight, Code, Description);
-            productLists.cargos.Add(cargo);
+            //productLists.cargos.Add(cargo);
+            productLists.cargotsdict.Add(ID, cargo);
+
             return cargo;
         }
     }
@@ -179,7 +199,8 @@ namespace OOD_Proj_1
             Single AMSL = Single.Parse(words[6], culture);
             string Country = words[7];
             Airport airport = new Airport(type, ID, Name, Code, Longitude, Latitude, AMSL, Country);
-            productLists.airports.Add(airport);
+            //productLists.airports.Add(airport);
+            productLists.airportsdict.Add(airport.ID, airport);
             return airport;
         }
         public override Airport Create(Message message, ProductLists productLists)
@@ -193,7 +214,8 @@ namespace OOD_Proj_1
             Single AMSL = BitConverter.ToSingle(message.MessageBytes[(28 + NL)..(32 + NL)]);
             string ISOCC = Encoding.ASCII.GetString(message.MessageBytes[(32 + NL)..(35 + NL)]);
             Airport airport = new Airport("AI", ID, Name, Code, Longitude, Latitude, AMSL, ISOCC);
-            productLists.airports.Add(airport);
+            productLists.airportsdict.Add(airport.ID, airport);
+            //productLists.airports.Add(airport);
             return airport;
         }
     }
@@ -207,14 +229,17 @@ namespace OOD_Proj_1
             UInt64 TargetAsID = UInt64.Parse(words[3]);
             string TakeOffTime = words[4];
             string LandingTime = words[5];
-            Single Longitude = Single.Parse(words[6], culture);
-            Single Latitude = Single.Parse(words[7], culture);
+            //Single Longitude = Single.Parse(words[6], culture);
+            //Single Latitude = Single.Parse(words[7], culture);
+            Single Longitude = productLists.airportsdict[OriginAsID].Longitude;
+            Single Latitude = productLists.airportsdict[OriginAsID].Latitude;
             Single AMSL = Single.Parse(words[8], culture);
             UInt64 PlaneID = UInt64.Parse(words[9]);
             List<UInt64> CrewAsIDs = words[10].ToUInt64List();
             List<UInt64> LoadAsIDs = words[11].ToUInt64List();
             Fligth fligth = new Fligth(type, ID, OriginAsID, TargetAsID, TakeOffTime, LandingTime, Longitude, Latitude, AMSL, PlaneID, CrewAsIDs, LoadAsIDs);
-            productLists.fligths.Add(fligth);
+            productLists.flightsdict.Add(ID, fligth);
+            //productLists.fligths.Add(fligth);
             return fligth;
         }
         public override Fligth Create(Message message, ProductLists productLists)
@@ -242,7 +267,8 @@ namespace OOD_Proj_1
                 Load.Add(BitConverter.ToUInt64(message.MessageBytes, temp));
             }
             Fligth fligth = new Fligth("FL", ID, OriginID, TargetID, TO, LD, 0, 0, 0, PlaneID, Crew, Load);
-            productLists.fligths.Add(fligth);
+            //productLists.fligths.Add(fligth);
+            productLists.flightsdict.Add(ID, fligth);
             return fligth;
         }
     }

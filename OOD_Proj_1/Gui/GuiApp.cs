@@ -29,8 +29,8 @@ namespace OOD_Proj_1.Gui
         private static void UpdatingGui(Thread RunnerThread, ProductLists productLists)
         {
             Adapter adapter = new Adapter();
-            adapter.UpdateFlights(productLists.fligths);
-            adapter.UpdateAirports(productLists.airports);
+            adapter.UpdateFlights(productLists.flightsdict);
+            adapter.UpdateAirports(productLists.airportsdict);
             while (RunnerThread.IsAlive)
             {
                 Runner.UpdateGUI(adapter);

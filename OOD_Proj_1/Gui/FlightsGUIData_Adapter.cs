@@ -13,18 +13,17 @@ namespace OOD_Proj_1.Gui
 {
     public class Adapter : FlightsGUIData
     {
-        private List<Fligth> fligths;
-        private Dictionary<ulong, Airport> airports = new Dictionary<ulong, Airport>();
+        private Dictionary<ulong, Fligth> fligths;
+        private Dictionary<ulong, Airport> airports;
 
-        public void UpdateFlights(List<Fligth> NewFlights)
+        public void UpdateFlights(Dictionary<ulong, Fligth> NewFlights)
         {
             fligths = NewFlights;
         }
-        public void UpdateAirports(List<Airport> NewAirports)
+
+        public void UpdateAirports(Dictionary<ulong, Airport> NewAirports)
         {
-            airports = new Dictionary<ulong, Airport>();
-            foreach (Airport Airport in NewAirports)
-                airports.Add(Airport.ID, Airport);
+            airports = NewAirports;
         }
         public override int GetFlightsCount()
         {
@@ -32,31 +31,25 @@ namespace OOD_Proj_1.Gui
         }
         public override ulong GetID(int index)
         {
-            return fligths[index].ID;
+            return fligths.ElementAt(index).Value.ID;
         }
         public override WorldPosition GetPosition(int index)
         {
+            //// Plan:    Create wrapper class overriding getposition method on a plane.
+            ////          Add get position method to plane class
+            //          Every list should actually be a dictionary 
+            //          Serialize class ProductLists, not just lists
+            //          In case of position change replace item with wrapper
             
-            WorldPosition wps = new WorldPosition();
-            Airport start = airports[fligths[index].OriginAsID];
-            Airport target = airports[fligths[index].TargetAsID];
-            int toftime = DateTime.Parse(fligths[index].TakeOffTime).GetSeconds();
-            int lndtime = DateTime.Parse(fligths[index].LandingTime).GetSeconds();
-            int nwtime = DateTime.Now.GetSeconds();
 
-            wps.Longitude = start.Longitude + (target.Longitude - start.Longitude) * GetProgress(fligths[index], toftime, lndtime, nwtime);
-            wps.Latitude = start.Latitude + (target.Latitude - start.Latitude) * GetProgress(fligths[index], toftime, lndtime, nwtime);
-            wps.Latitude = fligths[index].Latitude;
-            wps.Longitude = fligths[index].Longitude;
-            fligths[index].Longitude = (float)wps.Longitude;
-            fligths[index].Latitude = (float)wps.Latitude;
-            return wps;
+            return fligths.ElementAt(index).Value.IteratePosition(airports);
         }
         public override double GetRotation(int index)
         {
-            Airport start = airports[fligths[index].OriginAsID];
-            Airport target = airports[fligths[index].TargetAsID];
-            MPoint startPoint = new MPoint(start.Longitude, start.Latitude);
+            Airport start = airports[fligths.ElementAt(index).Value.OriginAsID];
+            Airport target = airports[fligths.ElementAt(index).Value.TargetAsID];
+            //MPoint startPoint = new MPoint(start.Longitude, start.Latitude);
+            MPoint startPoint = new MPoint(fligths.ElementAt(index).Value.Longitude, fligths.ElementAt(index).Value.Latitude);
             MPoint targetPoint = new MPoint(target.Longitude, target.Latitude);
             startPoint = SphericalMercator.FromLonLat(startPoint);
             targetPoint = SphericalMercator.FromLonLat(targetPoint);
@@ -65,29 +58,6 @@ namespace OOD_Proj_1.Gui
             MPoint w = new MPoint(0, 1);
             return Math.Atan2(w.Y * v.X - w.X * v.Y, w.X * v.X + w.Y * v.Y);
         }
-        private static double GetProgress(Fligth fligth, int toftime, int lndtime, int nwtime)
-        {
-            double a, b;
-
-            if (toftime > nwtime && lndtime > toftime) return 0;
-            if (toftime > nwtime && lndtime < toftime && lndtime < nwtime) return 1;
-            if (toftime < nwtime && lndtime < nwtime && lndtime > toftime) return 1;
-
-            if (toftime > lndtime)
-            {
-                if (nwtime < toftime)
-                {
-                    lndtime += 24 * 60 * 60; // Add one day
-                    nwtime += 24 * 60 * 60; // Add one day
-                }
-                else
-                    lndtime += 24 * 60 * 60; // Add one day
-            }
-            a = nwtime - toftime;
-            b = lndtime - toftime;
-            double progress = a / b;
-
-            return progress;
-        }
+        
     }
 }

@@ -87,9 +87,9 @@ namespace OOD_Proj_1.News
                 new Newspaper("Dziennik Politechniczny")
             };
             List<IReportable> reportables = new List<IReportable>();
-            reportables.AddRange(productLists.airports);
-            reportables.AddRange(productLists.passengerPlanes);
-            reportables.AddRange(productLists.cargoPlanes);
+            reportables.AddRange(productLists.airportsdict.Values.ToList());
+            reportables.AddRange(productLists.passangerPlanesdict.Values.ToList());
+            reportables.AddRange(productLists.cargoPlanesdict.Values.ToList());
             NewsGenerator newsGenerator = new NewsGenerator(medias, reportables);
             string news;
             while ((news = newsGenerator.GenerateNews()) != null) { Console.WriteLine(news); }

@@ -118,6 +118,7 @@ namespace OOD_Proj_1
             Class = cclass;
             Miles = miles;
         }
+
     }
     public class Crew : Person
     {
@@ -212,6 +213,23 @@ namespace OOD_Proj_1
             {
                 throw new Exception("Plane in flight " + ID.ToString() + " has no crew members. Check data source.");
             }
+        }
+
+        public virtual WorldPosition IteratePosition(Dictionary<ulong, Airport> airports)
+        {
+            WorldPosition wps = new WorldPosition();
+            Airport start = airports[OriginAsID];
+            Airport target = airports[TargetAsID];
+            int toftime = DateTime.Parse(TakeOffTime).GetSeconds();
+            int lndtime = DateTime.Parse(LandingTime).GetSeconds();
+            int nwtime = DateTime.Now.GetSeconds();
+           
+            var progress = Utils.GetProgress(toftime, lndtime, nwtime);
+            wps.Longitude = start.Longitude + (target.Longitude - start.Longitude) * progress;
+            wps.Latitude = start.Latitude + (target.Latitude - start.Latitude) * progress;
+            Latitude = (float)wps.Latitude;
+            Longitude = (float)wps.Longitude;
+            return wps;
         }
 
     }

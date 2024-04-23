@@ -39,7 +39,7 @@ namespace OOD_Proj_1
 
         private static void Simulator_OnContactInfoUpdate(object sender, ContactInfoUpdateArgs args)
         {
-            foreach (var person in productLists.passengers)
+            foreach (var person in productLists.passangersdict.Values)
             {
                 if (person.ID == args.ObjectID)
                 {
@@ -48,7 +48,7 @@ namespace OOD_Proj_1
                     break;
                 }
             }
-            foreach (var person in productLists.crews)
+            foreach (var person in productLists.crewsdict.Values)
             {
                 if (person.ID == args.ObjectID)
                 {
@@ -71,13 +71,12 @@ namespace OOD_Proj_1
         }
         private static void Simulator_OnPositionUpdate(object sender, PositionUpdateArgs args)
         {
-            foreach (var flight in productLists.fligths)
+            foreach (var flight in productLists.flightsdict.Values)
             {
                 if (flight.ID == args.ObjectID)
                 {
-                    flight.AMSL = args.AMSL;
-                    flight.Longitude = args.Longitude;
-                    flight.Latitude = args.Latitude;
+                    FligthPositionWrapper fligthPositionWrapper = new(flight, args.Longitude, args.Latitude, args.AMSL);
+                    productLists.flightsdict[flight.ID] = fligthPositionWrapper;
                     break;
                 }
             }
