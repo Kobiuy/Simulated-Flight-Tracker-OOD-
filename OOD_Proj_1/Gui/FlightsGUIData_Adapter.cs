@@ -51,6 +51,6 @@ namespace OOD_Proj_1.Gui
             MPoint w = new MPoint(0, 1);
             return Math.Atan2(w.Y * v.X - w.X * v.Y, w.X * v.X + w.Y * v.Y);
         }
-        
+
     }
 }

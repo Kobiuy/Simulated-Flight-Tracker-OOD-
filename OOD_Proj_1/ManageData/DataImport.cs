@@ -87,7 +87,7 @@ namespace OOD_Proj_1.ManageData
     }
     public class FileAndServerImporter : Importer
     {
-        
+
         public override List<Product> Import(ProductLists productLists)
         {
             FileImporter fileImporter = new FileImporter();

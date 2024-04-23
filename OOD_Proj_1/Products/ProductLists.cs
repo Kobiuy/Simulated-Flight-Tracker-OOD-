@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOD_Proj_1.Products
+namespace OOD_Proj_1
 {
     public class ProductLists
     {
+        public List<IObserver> observers = new List<IObserver>();
         public Dictionary<ulong, Airport> airportsdict = new Dictionary<ulong, Airport>();
         public Dictionary<ulong, Crew> crewsdict = new Dictionary<ulong, Crew>();
         public Dictionary<ulong, Cargo> cargotsdict = new Dictionary<ulong, Cargo>();
@@ -15,17 +16,16 @@ namespace OOD_Proj_1.Products
         public Dictionary<ulong, PassengerPlane> passangerPlanesdict = new Dictionary<ulong, PassengerPlane>();
         public Dictionary<ulong, CargoPlane> cargoPlanesdict = new Dictionary<ulong, CargoPlane>();
         public Dictionary<ulong, Fligth> flightsdict = new Dictionary<ulong, Fligth>();
-
-        /*
-        public List<Cargo> cargos = new List<Cargo>();
-        public List<Crew> crews = new List<Crew>();
-        public List<Passenger> passengers = new List<Passenger>();
-        public List<PassengerPlane> passengerPlanes = new List<PassengerPlane>();
-        public List<CargoPlane> cargoPlanes = new List<CargoPlane>();
-        public List<Fligth> fligths = new List<Fligth>();
-        public List<Airport> airports = new List<Airport>();
-        */
-
+        public ProductLists()
+        {
+            observers.Add(new Observer<Airport>(airportsdict));
+            observers.Add(new Observer<Crew>(crewsdict));
+            observers.Add(new Observer<CargoPlane>(cargoPlanesdict));
+            observers.Add(new Observer<Cargo>(cargotsdict));
+            observers.Add(new Observer<PassengerPlane>(passangerPlanesdict));
+            observers.Add(new Observer<Passenger>(passangersdict));
+            observers.Add(new Observer<Fligth>(flightsdict));
+        }
         public List<Product> GetAllDataList()
         {
             List<Product> result = new List<Product>();

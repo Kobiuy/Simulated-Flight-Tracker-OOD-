@@ -44,8 +44,5 @@ namespace OOD_Proj_1
             }
             return false;
         }
-
     }
-
-
 }

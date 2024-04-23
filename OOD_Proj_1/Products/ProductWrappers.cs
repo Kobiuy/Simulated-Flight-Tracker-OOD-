@@ -13,37 +13,21 @@ namespace OOD_Proj_1.Products
     public class FligthPositionWrapper : FligthWrapper
     {
         private int CreationTimeSeconds;
+        private double CreationLongitude;
+        private double CreationLatitude;
         public FligthPositionWrapper(Fligth fligth, float Longitude, float Latitude, float AMSL) : base(fligth)
         {
-            base.Latitude = Latitude;
-            base.Longitude = Longitude;
-            base.AMSL = AMSL;
+            this.Latitude = Latitude;
+            CreationLatitude = Latitude;
+            this.Longitude = Longitude;
+            CreationLongitude = Longitude;
+            this.AMSL = AMSL;
             CreationTimeSeconds = DateTime.Now.GetSeconds();
         }
 
         public override WorldPosition IteratePosition(Dictionary<ulong, Airport> airports)
         {
-            WorldPosition wps = new WorldPosition();
-            Airport target = airports[TargetAsID];
-            int lndtime = DateTime.Parse(LandingTime).GetSeconds();
-            int nwtime = DateTime.Now.GetSeconds();
-
-            var progress = MathUtils.GetProgress(CreationTimeSeconds, lndtime, nwtime);
-            if (progress != 0 && progress != 1)
-            {
-                progress = MathUtils.GetProgress(nwtime - 1, lndtime, nwtime);
-                wps.Longitude = Longitude + (target.Longitude - Longitude) * progress;
-                wps.Latitude = Latitude + (target.Latitude - Latitude) * progress;
-
-            }
-            else
-            {
-                wps.Longitude = target.Longitude;
-                wps.Latitude = target.Latitude;
-            }
-            Longitude = (float)wps.Longitude;
-            Latitude = (float)wps.Latitude;
-            return wps;
+            return MathUtils.InterpolatePosition(CreationLatitude, CreationLongitude, airports[TargetAsID], CreationTimeSeconds, this);
         }
     }
 

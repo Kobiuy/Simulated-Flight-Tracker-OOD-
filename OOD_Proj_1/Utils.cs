@@ -34,6 +34,20 @@ namespace OOD_Proj_1
 
             return progress;
         }
+        public static WorldPosition InterpolatePosition(double StartLatitude, double StartLongitude, Airport target, int starttime, Fligth fligth)
+        {
+            WorldPosition wps = new WorldPosition();
+            int lndtime = DateTime.Parse(fligth.LandingTime).GetSeconds();
+            int nwtime = DateTime.Now.GetSeconds();
+
+            var progress = MathUtils.GetProgress(starttime, lndtime, nwtime);
+            wps.Longitude = StartLongitude + (target.Longitude - StartLongitude) * progress;
+            wps.Latitude = StartLatitude + (target.Latitude - StartLatitude) * progress;
+            fligth.Latitude = (float)wps.Latitude;
+            fligth.Longitude = (float)wps.Longitude;
+            return wps;
+        }
+
     }
     public static class LogManager
     {
@@ -72,6 +86,5 @@ namespace OOD_Proj_1
                 sw.WriteLine($"{DateTime.Now.ToString("HH:mm:ss")}| INVALID DATA");
             }
         }
-
     }
 }

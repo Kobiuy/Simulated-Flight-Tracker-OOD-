@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
-namespace OOD_Proj_1.Products
+namespace OOD_Proj_1
 {
     abstract class Generator // Base class of classes generating "Products"
     {
@@ -218,8 +218,6 @@ namespace OOD_Proj_1.Products
             string LandingTime = words[5];
             Single Longitude = Single.Parse(words[6], culture);
             Single Latitude = Single.Parse(words[7], culture);
-            //float Longitude = productLists.airportsdict[OriginAsID].Longitude;
-            //float Latitude = productLists.airportsdict[OriginAsID].Latitude;
             float AMSL = float.Parse(words[8], culture);
             ulong PlaneID = ulong.Parse(words[9]);
             List<ulong> CrewAsIDs = words[10].ToUInt64List();

@@ -65,15 +65,15 @@ namespace OOD_Proj_1
         }
         private static void Simulator_OnIDUpdate(object sender, IDUpdateArgs args)
         {
-            bool Valid = false;
-            if (productLists.passangersdict.UpdateKeyAndID(args.ObjectID, args.NewObjectID)) Valid = true;
-            if (productLists.crewsdict.UpdateKeyAndID(args.ObjectID, args.NewObjectID)) Valid = true;
-            if (productLists.passangerPlanesdict.UpdateKeyAndID(args.ObjectID, args.NewObjectID)) Valid = true;
-            if (productLists.cargoPlanesdict.UpdateKeyAndID(args.ObjectID, args.NewObjectID)) Valid = true;
-            if (productLists.cargotsdict.UpdateKeyAndID(args.ObjectID, args.NewObjectID)) Valid = true;
-            if (productLists.airportsdict.UpdateKeyAndID(args.ObjectID, args.NewObjectID)) Valid = true;
-            if (productLists.flightsdict.UpdateKeyAndID(args.ObjectID, args.NewObjectID)) Valid = true;
-            if (!Valid) LogManager.InvalidData();
+            foreach (var product in productLists.GetAllDataList())
+            {
+                if (product.ID == args.NewObjectID) { LogManager.InvalidData(); return; }
+            }
+            foreach (var obs in productLists.observers)
+            {
+                if (obs.FindAndUpdateID(args.ObjectID, args.NewObjectID)) return;
+            }
+            LogManager.InvalidData();
         }
         private static void Simulator_OnPositionUpdate(object sender, PositionUpdateArgs args)
         {
@@ -91,7 +91,7 @@ namespace OOD_Proj_1
             {
                 if (airport.ID == args.ObjectID)
                 {
-                    LogManager.ChangePosition(args, airport.Latitude, airport.Longitude,airport.AMSL);
+                    LogManager.ChangePosition(args, airport.Latitude, airport.Longitude, airport.AMSL);
                     airport.Latitude = args.Latitude; airport.Longitude = args.Longitude;
                     airport.AMSL = args.AMSL;
                     return;

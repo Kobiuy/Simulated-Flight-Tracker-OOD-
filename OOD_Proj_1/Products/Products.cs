@@ -7,7 +7,7 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using OOD_Proj_1.News;
 
-namespace OOD_Proj_1.Products
+namespace OOD_Proj_1
 {
     public class Factory
     {
@@ -42,12 +42,12 @@ namespace OOD_Proj_1.Products
     public abstract class Product // Base class of objects created by "Factory"
     {
         public string Type { get; set; }
-        public ulong ID { get; set; }
+        public UInt64 ID { get; set; }
     }
     public abstract class Person : Product
     {
         public string Name { get; set; }
-        public ulong Age { get; set; }
+        public UInt64 Age { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
     }
@@ -60,9 +60,9 @@ namespace OOD_Proj_1.Products
     public class CargoPlane : Plane, IReportable
     {
         public CargoPlane() { }
-        public float MaxLoad { get; set; }
+        public Single MaxLoad { get; set; }
 
-        public CargoPlane(string type, ulong id, string serial, string country, string model, float maxload)
+        public CargoPlane(string type, UInt64 id, string serial, string country, string model, Single maxload)
         {
             Type = type;
             ID = id;
@@ -80,11 +80,11 @@ namespace OOD_Proj_1.Products
     public class PassengerPlane : Plane, IReportable
     {
         public PassengerPlane() { }
-        public ushort FirstClassSize { get; set; }
-        public ushort BusinessClassSize { get; set; }
-        public ushort EconomyClassSize { get; set; }
+        public UInt16 FirstClassSize { get; set; }
+        public UInt16 BusinessClassSize { get; set; }
+        public UInt16 EconomyClassSize { get; set; }
 
-        public PassengerPlane(string type, ulong id, string serial, string country, string model, ushort fcs, ushort bcs, ushort ecs)
+        public PassengerPlane(string type, UInt64 id, string serial, string country, string model, UInt16 fcs, UInt16 bcs, UInt16 ecs)
         {
             Type = type;
             ID = id;
@@ -105,9 +105,9 @@ namespace OOD_Proj_1.Products
     {
         public Passenger() { }
         public string Class { get; set; }
-        public ulong Miles { get; set; }
+        public UInt64 Miles { get; set; }
 
-        public Passenger(string type, ulong id, string name, ulong age, string phone, string email, string cclass, ulong miles)
+        public Passenger(string type, UInt64 id, string name, UInt64 age, string phone, string email, string cclass, UInt64 miles)
         {
             Type = type;
             ID = id;
@@ -123,9 +123,9 @@ namespace OOD_Proj_1.Products
     public class Crew : Person
     {
         public Crew() { }
-        public ushort Practice { get; set; }
+        public UInt16 Practice { get; set; }
         public string Role { get; set; }
-        public Crew(string type, ulong id, string name, ulong age, string phone, string email, ushort practice, string role)
+        public Crew(string type, UInt64 id, string name, UInt64 age, string phone, string email, UInt16 practice, string role)
         {
             Type = type;
             ID = id;
@@ -140,11 +140,11 @@ namespace OOD_Proj_1.Products
     public class Cargo : Product
     {
         public Cargo() { }
-        public float Weight { get; set; }
+        public Single Weight { get; set; }
         public string Code { get; set; }
         public string Description { get; set; }
 
-        public Cargo(string type, ulong id, float weight, string code, string description)
+        public Cargo(string type, UInt64 id, Single weight, string code, string description)
         {
             Type = type;
             ID = id;
@@ -158,12 +158,12 @@ namespace OOD_Proj_1.Products
         public Airport() { }
         public string Name { get; set; }
         public string Code { get; set; }
-        public float Longitude { get; set; }
-        public float Latitude { get; set; }
-        public float AMSL { get; set; }
+        public Single Longitude { get; set; }
+        public Single Latitude { get; set; }
+        public Single AMSL { get; set; }
         public string Country { get; set; }
 
-        public Airport(string type, ulong id, string name, string code, float longitude, float latitude, float amsl, string country)
+        public Airport(string type, UInt64 id, string name, string code, Single longitude, Single latitude, Single amsl, string country)
         {
             Type = type;
             ID = id;
@@ -183,19 +183,19 @@ namespace OOD_Proj_1.Products
     public class Fligth : Product
     {
         public Fligth() { }
-        public ulong OriginAsID { get; set; }
-        public ulong TargetAsID { get; set; }
+        public UInt64 OriginAsID { get; set; }
+        public UInt64 TargetAsID { get; set; }
         public string TakeOffTime { get; set; }
         public string LandingTime { get; set; }
-        public float Longitude { get; set; }
-        public float Latitude { get; set; }
-        public float AMSL { get; set; }
-        public ulong PlaneID { get; set; }
-        public List<ulong> CrewAsIDs { get; set; }
-        public List<ulong> LoadAsIDs { get; set; }
+        public Single Longitude { get; set; }
+        public Single Latitude { get; set; }
+        public Single AMSL { get; set; }
+        public UInt64 PlaneID { get; set; }
+        public List<UInt64> CrewAsIDs { get; set; }
+        public List<UInt64> LoadAsIDs { get; set; }
 
-        public Fligth(string type, ulong id, ulong originID, ulong targetID, string takeOffTime, string landingTime,
-            float longitude, float latitude, float amsl, ulong planeID, List<ulong> crewAsID, List<ulong> loadaAsID)
+        public Fligth(string type, UInt64 id, UInt64 originID, UInt64 targetID, string takeOffTime, string landingTime,
+            Single longitude, Single latitude, Single amsl, UInt64 planeID, List<UInt64> crewAsID, List<UInt64> loadaAsID)
         {
             Type = type;
             ID = id;
@@ -217,20 +217,7 @@ namespace OOD_Proj_1.Products
 
         public virtual WorldPosition IteratePosition(Dictionary<ulong, Airport> airports)
         {
-            WorldPosition wps = new WorldPosition();
-            Airport start = airports[OriginAsID];
-            Airport target = airports[TargetAsID];
-            int toftime = DateTime.Parse(TakeOffTime).GetSeconds();
-            int lndtime = DateTime.Parse(LandingTime).GetSeconds();
-            int nwtime = DateTime.Now.GetSeconds();
-
-            var progress = MathUtils.GetProgress(toftime, lndtime, nwtime);
-            wps.Longitude = start.Longitude + (target.Longitude - start.Longitude) * progress;
-            wps.Latitude = start.Latitude + (target.Latitude - start.Latitude) * progress;
-            Latitude = (float)wps.Latitude;
-            Longitude = (float)wps.Longitude;
-            return wps;
+            return MathUtils.InterpolatePosition(airports[OriginAsID].Latitude, airports[OriginAsID].Longitude, airports[TargetAsID], DateTime.Parse(TakeOffTime).GetSeconds(), this);
         }
-
     }
 }
