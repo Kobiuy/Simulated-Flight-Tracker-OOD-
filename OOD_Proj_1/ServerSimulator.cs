@@ -45,7 +45,8 @@ namespace OOD_Proj_1
                 {
                     person.Email = args.EmailAddress;
                     person.Phone = args.PhoneNumber;
-                    break;
+                    LogManager.ContactInfo(args);
+                    return;
                 }
             }
             foreach (var person in productLists.crewsdict.Values)
@@ -54,9 +55,11 @@ namespace OOD_Proj_1
                 {
                     person.Email = args.EmailAddress;
                     person.Phone = args.PhoneNumber;
-                    break;
+                    LogManager.ContactInfo(args);
+                    return;
                 }
             }
+            LogManager.InvalidData();
 
         }
         private static void Simulator_OnIDUpdate(object sender, IDUpdateArgs args)
@@ -66,8 +69,11 @@ namespace OOD_Proj_1
                 if (product.ID == args.ObjectID)
                 {
                     product.ID = args.NewObjectID;
+                    LogManager.ChangeID(args);
+                    return;
                 }
             }
+            LogManager.InvalidData();
         }
         private static void Simulator_OnPositionUpdate(object sender, PositionUpdateArgs args)
         {
@@ -77,9 +83,11 @@ namespace OOD_Proj_1
                 {
                     FligthPositionWrapper fligthPositionWrapper = new(flight, args.Longitude, args.Latitude, args.AMSL);
                     productLists.flightsdict[flight.ID] = fligthPositionWrapper;
-                    break;
+                    LogManager.ChangePosition(args);
+                    return;
                 }
             }
+            LogManager.InvalidData();
         }
 
         public static void StopServer()

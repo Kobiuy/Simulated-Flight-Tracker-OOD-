@@ -12,7 +12,7 @@ namespace OOD_Proj_1
         public const string DataSource = "FILEwUPDATES"; // Choose from ["FILE", "SIM_SERVER", "FILEwUPDATES"]
         public const string FileName = "example_data.ftr"; // Set source file name
         public const string UpdatesFileName = "example.ftre"; // Set source file name for updates
-        public const int SimMin = 50; // Set minimum time between messages 
-        public const int SimMax = 500; // Set maximum time between messages 
+        public const int SimMin = 0; // Set minimum time between messages 
+        public const int SimMax = 1; // Set maximum time between messages 
     }
 }

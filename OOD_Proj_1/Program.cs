@@ -16,6 +16,7 @@ namespace OOD_Proj_1
     {
         static void Main(string[] args)
         {
+            LogManager.NewRun();
             ProductLists productLists = new ProductLists();
             DataImporter importer = new DataImporter();
             importer.ImportData(productLists);
