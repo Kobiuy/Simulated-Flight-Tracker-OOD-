@@ -16,7 +16,7 @@ namespace OOD_Proj_1
         public static void StartServer(ProductLists PL)
         {
             productLists = PL;
-            NetworkSourceSimulator.NetworkSourceSimulator simulator = new NetworkSourceSimulator.NetworkSourceSimulator(Settings.UpdatesFileName, Settings.SimMin, Settings.SimMax);
+            NetworkSourceSimulator.NetworkSourceSimulator simulator = new NetworkSourceSimulator.NetworkSourceSimulator(Settings.ServerFileName, Settings.SimMin, Settings.SimMax);
             ServerImporter serverImporter = new ServerImporter();
             simulator.OnNewDataReady += (object sender, NewDataReadyArgs args) =>
             {
