@@ -6,6 +6,9 @@ using System.Text.Json.Serialization;
 using System.Xml.Linq;
 using System.Xml.Schema;
 using OOD_Proj_1.News;
+using ExCSS;
+using NetTopologySuite.Mathematics;
+using Avalonia;
 
 namespace OOD_Proj_1
 {
@@ -43,6 +46,9 @@ namespace OOD_Proj_1
     {
         public string Type { get; set; }
         public UInt64 ID { get; set; }
+        public Dictionary<string, dynamic> Properties { get; set; }
+
+        public bool IsQueryTrue(string query) { return true; }
     }
     public abstract class Person : Product
     {
@@ -70,6 +76,15 @@ namespace OOD_Proj_1
             Country = country;
             Model = model;
             MaxLoad = maxload;
+            Properties = new Dictionary<string, object>
+            {
+                { "ID", ID },
+                { "Serial", Serial },
+                { "Country", Country },
+                { "Model", Model },
+                { "MaxLoad", MaxLoad }
+            };
+
         }
 
         public string Accept(Media medium)
@@ -94,6 +109,19 @@ namespace OOD_Proj_1
             FirstClassSize = fcs;
             BusinessClassSize = bcs;
             EconomyClassSize = ecs;
+
+            Properties = new Dictionary<string, object>
+            {
+                { "ID", ID },
+                { "Serial", Serial },
+                { "Country", Country },
+                { "Model", Model },
+                { "FirstClassSize", FirstClassSize },
+                { "BusinessClassSize", BusinessClassSize },
+                { "EconomyClassSize", EconomyClassSize }
+            };
+
+
         }
 
         public string Accept(Media medium)
@@ -117,6 +145,17 @@ namespace OOD_Proj_1
             Email = email;
             Class = cclass;
             Miles = miles;
+
+            Properties = new Dictionary<string, object>
+            {
+                { "ID", ID },
+                { "Name", Name },
+                { "Age", Age },
+                { "Phone", Phone },
+                { "Email", Email },
+                { "Class", Class },
+                { "Miles", Miles }
+            };
         }
 
     }
@@ -135,6 +174,17 @@ namespace OOD_Proj_1
             Email = email;
             Practice = practice;
             Role = role;
+
+            Properties = new Dictionary<string, object>
+            {
+                { "ID", ID },
+                { "Name", Name },
+                { "Age", Age },
+                { "Phone", Phone },
+                { "Email", Email },
+                { "Practice", Practice },
+                { "Role", Role }
+            };
         }
     }
     public class Cargo : Product
@@ -151,6 +201,14 @@ namespace OOD_Proj_1
             Weight = weight;
             Code = code;
             Description = description;
+
+            Properties = new Dictionary<string, object>
+            {
+                { "ID", ID },
+                { "Weight", Weight },
+                { "Code", Code },
+                { "Description", Description },
+            };
         }
     }
     public class Airport : Product, IReportable
@@ -173,6 +231,17 @@ namespace OOD_Proj_1
             Latitude = latitude;
             AMSL = amsl;
             Country = country;
+
+            Properties = new Dictionary<string, object>
+            {
+                { "ID", ID },
+                { "Name", Name },
+                { "Code", Code },
+                { "Longitude", Longitude },
+                { "Latitude", Latitude },
+                { "AMSL", AMSL },
+                { "Country", Country }
+            };
         }
 
         public string Accept(Media medium)
@@ -213,6 +282,19 @@ namespace OOD_Proj_1
             {
                 throw new Exception("Plane in flight " + ID.ToString() + " has no crew members. Check data source.");
             }
+
+            Properties = new Dictionary<string, object>
+            {
+                { "ID", ID },
+                { "OriginAsID", OriginAsID },
+                { "TargetAsID", TargetAsID },
+                { "Longitude", Longitude },
+                { "Latitude", Latitude },
+                { "AMSL", AMSL },
+                { "TakeOffTime", TakeOffTime },
+                { "LandingTime", LandingTime },
+                { "PlaneID", PlaneID }
+            };
         }
 
         public virtual WorldPosition IteratePosition(Dictionary<ulong, Airport> airports)

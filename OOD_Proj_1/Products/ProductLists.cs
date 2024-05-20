@@ -16,7 +16,10 @@ namespace OOD_Proj_1
         public Dictionary<ulong, PassengerPlane> passangerPlanesdict = new Dictionary<ulong, PassengerPlane>();
         public Dictionary<ulong, CargoPlane> cargoPlanesdict = new Dictionary<ulong, CargoPlane>();
         public Dictionary<ulong, Fligth> flightsdict = new Dictionary<ulong, Fligth>();
-        public ProductLists()
+
+        public Dictionary<string, List<Product>> stringToList = new Dictionary<string, List<Product>>();
+
+    public ProductLists()
         {
             observers.Add(new Observer<Airport>(airportsdict));
             observers.Add(new Observer<Crew>(crewsdict));
@@ -25,6 +28,10 @@ namespace OOD_Proj_1
             observers.Add(new Observer<PassengerPlane>(passangerPlanesdict));
             observers.Add(new Observer<Passenger>(passangersdict));
             observers.Add(new Observer<Fligth>(flightsdict));
+
+            List<Product> products = new List<Product>();
+            products.AddRange(airportsdict.Values.ToList());
+            stringToList.Add("Airport", products);
         }
         public List<Product> GetAllDataList()
         {
@@ -38,5 +45,7 @@ namespace OOD_Proj_1
             result.AddRange(airportsdict.Values.ToList());
             return result;
         }
+
     }
+
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mapsui.Extensions;
 using OOD_Proj_1.Gui;
 using OOD_Proj_1.ManageData;
 using OOD_Proj_1.News;
@@ -13,11 +15,12 @@ namespace OOD_Proj_1
     public static class Menu
     {
         public static SerializeData serializator = new SerializeData();
+        public static ComandParser comandParser = new ComandParser();
         public static Dictionary<string, Action<ProductLists>> menuDict = new Dictionary<string, Action<ProductLists>>()
             {
                 { "print", serializator.Serialize },
                 { "gui", GuiApp.StartGUI },
-                {"report", (ProductLists p)=>(new Reporter()).Report(p)},
+                { "report", (ProductLists p)=>(new Reporter()).Report(p)},
                 { "exit", StopAll }
             };
         public static void StartMenu(ProductLists productLists)
@@ -34,15 +37,23 @@ namespace OOD_Proj_1
                 }
                 else
                 {
-                    Console.WriteLine($"[{UserInput}] nie jest poprawną komendą");
+                    try
+                    {
+                        comandParser.ChooseCommand(UserInput, productLists);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message.ToString());
+                    }
+
+                }
                 }
             }
-        }
-        public static void StopAll(ProductLists p)
-        {
-            ServerSimulator.StopServer();
-            if (GuiApp.UpdateGuiThread != null && GuiApp.UpdateGuiThread.IsAlive)
-                Console.WriteLine("In order to fully exit application close GUI");
+            public static void StopAll(ProductLists p)
+            {
+                ServerSimulator.StopServer();
+                if (GuiApp.UpdateGuiThread != null && GuiApp.UpdateGuiThread.IsAlive)
+                    Console.WriteLine("In order to fully exit application close GUI");
+            }
         }
     }
-}
