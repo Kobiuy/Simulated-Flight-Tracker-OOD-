@@ -24,6 +24,7 @@ namespace OOD_Proj_1
             {"AI", new AirportGenerator() },
             {"FL", new FlightGenerator() },
         };
+
         public Product Create(string txt, ProductLists productLists)
         {
             string[] words = txt.Split(',');
@@ -47,8 +48,18 @@ namespace OOD_Proj_1
         public string Type { get; set; }
         public UInt64 ID { get; set; }
         public Dictionary<string, dynamic> Properties { get; set; }
+        Dictionary<string, Func<IComparable, IComparable, bool>> operators = new Dictionary<string, Func<IComparable, IComparable, bool>>()
+        {
+            {"!=", (str, str2) => str.CompareTo(str2) != 0 },
+            {"=",  (str, str2) => str.CompareTo(str2) == 0 },
+            {">=", (str, str2) => str.CompareTo(str2) >= 0 },
+            {"<=",  (str, str2) => str.CompareTo(str2) <= 0 }
 
-        public bool IsQueryTrue(string query) { return true; }
+        };
+        public bool IsQueryTrue(string query) { 
+            var splitted = query.Split(' ');
+            return operators[splitted[1]](Properties[splitted[0]], UInt64.Parse(splitted[2])); 
+        }
     }
     public abstract class Person : Product
     {
