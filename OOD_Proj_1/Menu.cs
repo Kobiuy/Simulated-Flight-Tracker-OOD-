@@ -46,7 +46,6 @@ namespace OOD_Proj_1
                     {
                         Console.WriteLine("Invalid Command");
                     }
-
                 }
                 }
             }
