@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mapsui.Extensions;
-using OOD_Proj_1.Gui;
+﻿using OOD_Proj_1.Gui;
 using OOD_Proj_1.ManageData;
 using OOD_Proj_1.News;
-using OOD_Proj_1.Products;
 
 namespace OOD_Proj_1
 {

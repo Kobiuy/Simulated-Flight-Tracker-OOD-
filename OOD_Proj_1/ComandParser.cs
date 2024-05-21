@@ -48,11 +48,8 @@ namespace OOD_Proj_1
             }
             return result;
         }
-        public void GetDataAndGenerateTable(List<string> conditions, List<string> fields, List<Product> list) 
+        public void GetDataAndGenerateTable(List<string> conditions, List<string> fields, List<Product> list)
         {
-            if (fields[0] == "*")
-                fields = list[0].Properties.Keys.ToList();
-
             TableGenerator tableGenerator = new TableGenerator();
             var result = WhereClause(conditions, list);
             FieldsForTable fieldsForTable = new();
@@ -66,7 +63,7 @@ namespace OOD_Proj_1
         public abstract void Parse(string[] query, ProductLists productLists);
     }
 
-    public class Displayer : Query 
+    public class Displayer : Query
     {
         public override void Parse(string[] query, ProductLists productLists)
         {
@@ -74,7 +71,7 @@ namespace OOD_Proj_1
             string from;
             List<string> conditions = new List<string>();
             List<string> fields = new List<string>();
-            while (ID < query.Length - 2 && query[++ID] != "from")
+            while (ID < query.Length - 1 && query[++ID] != "from")
                 fields.Add(query[ID]);
             if (!(query[ID] == "from"))
                 throw new Exception("Zła składnia komendy");
@@ -84,6 +81,16 @@ namespace OOD_Proj_1
             while (ID < query.Length - 1)
                 conditions.Add(query[++ID]);
 
+            if (fields[0] == "*")
+            {
+                if (productLists.StringToProductList[from]().Count() > 0)
+                    fields = productLists.StringToProductList[from]()[0].Properties.Keys.ToList();
+                else
+                {
+                    Console.WriteLine("List is empty");
+                    return;
+                }
+            }
             GetData getData = new GetData();
             getData.GetDataAndGenerateTable(conditions, fields, productLists.StringToProductList[from]());
         }
