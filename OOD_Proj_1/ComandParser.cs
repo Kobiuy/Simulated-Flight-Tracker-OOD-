@@ -85,7 +85,7 @@ namespace OOD_Proj_1
                 conditions.Add(query[++ID]);
 
             GetData getData = new GetData();
-            getData.GetDataAndGenerateTable(conditions, fields, productLists.getItemsWhere[from]());
+            getData.GetDataAndGenerateTable(conditions, fields, productLists.StringToProductList[from]());
         }
     }
 
@@ -100,11 +100,11 @@ namespace OOD_Proj_1
             while (ID < query.Length - 1 && query[++ID] != "where")
                 KVL.Add(query[ID]);
 
-            var items = productLists.getItemsWhere[class_name]();
+            var items = productLists.StringToProductList[class_name]();
             if (query[ID] == "where")
             {
                 GetData getData = new GetData();
-                items = (getData.WhereClause(query[(ID + 1)..(query.Length)].ToList(), productLists.getItemsWhere[class_name]())).ToList<Product>();
+                items = (getData.WhereClause(query[(ID + 1)..(query.Length)].ToList(), productLists.StringToProductList[class_name]())).ToList<Product>();
             }
 
             foreach (var item in items)
@@ -140,7 +140,7 @@ namespace OOD_Proj_1
         {
             string class_name = query[1];
             GetData getData = new GetData();
-            var items = getData.WhereClause(query[3..(query.Length)].ToList(), productLists.getItemsWhere[class_name]());
+            var items = getData.WhereClause(query[3..(query.Length)].ToList(), productLists.StringToProductList[class_name]());
             foreach (var item in items)
                 RemoveItemFromAdequateDictionary[class_name](item, productLists);
         }

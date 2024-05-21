@@ -12,7 +12,7 @@
         public Dictionary<ulong, Flight> flightsdict = new Dictionary<ulong, Flight>();
 
         //public Dictionary<string, List<Product>> stringToList = new Dictionary<string, List<Product>>();
-        public Dictionary<string, Func<List<Product>>> getItemsWhere;
+        public Dictionary<string, Func<List<Product>>> StringToProductList;
 
         public ProductLists()
         {
@@ -24,7 +24,7 @@
             observers.Add(new Observer<Passenger>(passangersdict));
             observers.Add(new Observer<Flight>(flightsdict));
 
-            getItemsWhere = new Dictionary<string, Func<List<Product>>>
+            StringToProductList = new Dictionary<string, Func<List<Product>>>
             {
                 { "PassengerPlane", () => passangerPlanesdict.Values.ToList<Product>() },
                 { "CargoPlane", () => cargoPlanesdict.Values.ToList<Product>() },

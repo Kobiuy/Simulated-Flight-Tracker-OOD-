@@ -84,7 +84,7 @@ namespace OOD_Proj_1
         public Person()
         {
             Parser.Add("Name", (string data) => data);
-            Parser.Add("MaxLoad", (string data) => UInt64.Parse(data));
+            Parser.Add("Age", (string data) => UInt64.Parse(data));
             Parser.Add("Phone", (string data) => data);
             Parser.Add("Email", (string data) => data);
         }
