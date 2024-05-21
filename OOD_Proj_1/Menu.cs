@@ -20,7 +20,7 @@ namespace OOD_Proj_1
             string UserInput = "";
             Action<ProductLists> method;
             Console.WriteLine("Write \"print\" to make a snapshot, \"gui\" for GUI, \"report\" or \"exit\" to exit menu.");
-            Console.WriteLine("You can queries \"Display\" \"Add\" \"Delete\" and \"Update\" as well");
+            Console.WriteLine("You can use queries like \"Display\" \"Add\" \"Delete\" and \"Update\" as well");
             while (UserInput != "exit")
             {
                 UserInput = Console.ReadLine();
