@@ -56,7 +56,7 @@ namespace OOD_Proj_1
             TableGenerator tableGenerator = new TableGenerator();
             var result = WhereClause(conditions, list);
             FieldsForTable fieldsForTable = new();
-            (string[][] items, int[] lengths) = fieldsForTable.Get(fields, result);
+            (string[][] items, int[] lengths) = fieldsForTable.GetDataAndLengths(fields, result);
             tableGenerator.Generate(fields.ToArray(), lengths, items);
         }
     }

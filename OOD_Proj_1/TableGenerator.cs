@@ -8,16 +8,19 @@ namespace OOD_Proj_1
 {
     public class FieldsForTable
     {
-        public (string[][], int[]) Get(List<string> fields, List<Product> result)
+        public (string[][], int[]) GetDataAndLengths(List<string> fields, List<Product> result)
         {
             string[][] items = new string[result.Count][];
             int[] lengths = new int[fields.Count];
+            for (int j = 0; j < fields.Count; j++)
+            {
+                if (fields[j].Length > lengths[j]) lengths[j] = fields[j].Length;
+            }
             for (int i = 0; i < result.Count; i++)
             {
                 items[i] = new string[fields.Count];
                 for (int j = 0; j < fields.Count; j++)
                 {
-                    if (fields[j].Length > lengths[j]) lengths[j] = fields[j].Length;
                     items[i][j] = result[i].Properties[fields[j]].ToString();
                     if (items[i][j].Length > lengths[j]) lengths[j] = items[i][j].Length;
                 }
