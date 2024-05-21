@@ -34,7 +34,7 @@ namespace OOD_Proj_1
 
             return progress;
         }
-        public static WorldPosition InterpolatePosition(double StartLatitude, double StartLongitude, Airport target, int starttime, Fligth fligth)
+        public static WorldPosition InterpolatePosition(double StartLatitude, double StartLongitude, Airport target, int starttime, Flight fligth)
         {
             WorldPosition wps = new WorldPosition();
             int lndtime = DateTime.Parse(fligth.LandingTime).GetSeconds();

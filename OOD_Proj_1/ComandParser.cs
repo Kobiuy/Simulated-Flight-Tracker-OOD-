@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using Avalonia.Markup.Xaml.Templates;
+using NetTopologySuite.Index.HPRtree;
+using System.Collections.Generic;
+using System.Text;
 using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace OOD_Proj_1
@@ -30,125 +33,59 @@ namespace OOD_Proj_1
         }
     }
 
-
-    public class GetData<T> where T : Product
+    public class GetData
     {
-        public void SART(List<string> conditions, List<string> fields, List<T> list)
+        public List<Product> WhereClause(List<string> conditions, List<Product> list)
         {
-            TableGenerator tableGenerator = new TableGenerator();
-            List<T> result = list;
-            List<T> tempResult;
-            List<T> tempResultForAndCondition;
+            List<Product> result = list;
+            List<Product> getDataResult;
             if (conditions.Count > 0)
             {
-                result = new List<T>();
+                result = new List<Product>();
                 string NowQuery = conditions[0] + " " + conditions[1] + " " + conditions[2];
                 result.AddRange(from item in list where item.IsQueryTrue(NowQuery) select item);
                 for (int i = 4; i < conditions.Count; i = i + 4)
                 {
                     NowQuery = conditions[i] + " " + conditions[i + 1] + " " + conditions[i + 2];
-                    tempResult = (from item in list where item.IsQueryTrue(NowQuery) select item).ToList();
                     if (conditions[i - 1] == "or")
                     {
-                        for (int j = 0; j < tempResult.Count; j++)
+                        getDataResult = (from item in list where item.IsQueryTrue(NowQuery) select item).ToList();
+
+                        for (int j = 0; j < getDataResult.Count; j++)
                         {
-                            if (!result.Contains(tempResult[j])) result.Add(tempResult[j]);
+                            if (!result.Contains(getDataResult[j])) result.Add(getDataResult[j]);
                         }
                     }
                     else
                     {
-                        tempResultForAndCondition = new List<T>();
-                        for (int j = 0; j < result.Count; j++)
-                        {
-                            if (tempResult.Contains(result[j])) tempResultForAndCondition.Add(tempResult[j]);
-                        }
-                        result = tempResultForAndCondition;
+                        result = (from item in result where item.IsQueryTrue(NowQuery) select item).ToList();
                     }
                 }
             }
-            FieldsForTable<T> fieldsForTable = new();
+            return result;
+        }
+        public void GetDataAndGenerateTable(List<string> conditions, List<string> fields, List<Product> list) // Works
+        {
+            if (fields[0] == "*")
+            {
+                fields = list[0].Properties.Keys.ToList();
+            }
+            TableGenerator tableGenerator = new TableGenerator();
+            var result = WhereClause(conditions, list);
+            FieldsForTable fieldsForTable = new();
             (string[][] items, int[] lengths) = fieldsForTable.Get(fields, result);
             tableGenerator.Generate(fields.ToArray(), lengths, items);
         }
     }
-    /*
-        public interface IGetData
-        {
-            public void SelectAndRunTable(List<string> conditions, List<string> fields, ProductLists productLists);
-        }
-        public class FromPP : IGetData
-        {
-            public void SelectAndRunTable(List<string> conditions, List<string> fields, ProductLists productLists)
-            {
-                TableGenerator tableGenerator = new TableGenerator();
 
-                List<PassengerPlane> result = productLists.passangerPlanesdict.Values.ToList();
-                List<PassengerPlane> tempResult;
-                List<PassengerPlane> tempResultForAndCondition;
-                if (conditions.Count > 0)
-                {
-                    result = new List<PassengerPlane>();
-                    string NowQuery = conditions[0] + " " + conditions[1] + " " + conditions[2];
-                    result.AddRange(from item in productLists.passangerPlanesdict.Values where item.IsQueryTrue(NowQuery) select item);
-                    for (int i = 4; i < conditions.Count; i = i + 4)
-                    {
-                        NowQuery = conditions[i] + " " + conditions[i + 1] + " " + conditions[i + 2];
-                        tempResult = (from item in productLists.passangerPlanesdict.Values where item.IsQueryTrue(NowQuery) select item).ToList();
-                        if (conditions[i - 1] == "or")
-                        {
-                            for (int j = 0; j < tempResult.Count; j++)
-                            {
-                                if (!result.Contains(tempResult[j])) result.Add(tempResult[j]);
-                            }
-                        }
-                        else
-                        {
-                            tempResultForAndCondition = new List<PassengerPlane>();
-                            for (int j = 0; j < result.Count; j++)
-                            {
-                                if (tempResult.Contains(result[j])) tempResultForAndCondition.Add(tempResult[j]);
-                            }
-                            result = tempResultForAndCondition;
-                        }
-                    }
-                }
-                FieldsForTable<PassengerPlane> fieldsForTable = new();
-                (string[][] items, int[] lengths) = fieldsForTable.Get(fields, result);
-                tableGenerator.Generate(fields.ToArray(), lengths, items);
-            }
-        }*/
-
-    public class FieldsForTable<T> where T : Product
-    {
-        public (string[][], int[]) Get(List<string> fields, List<T> result)
-        {
-            string[][] items = new string[result.Count][];
-            int[] lengths = new int[fields.Count];
-            for (int i = 0; i < result.Count; i++)
-            {
-                items[i] = new string[fields.Count];
-                for (int j = 0; j < fields.Count; j++)
-                {
-                    if (fields[j].Length > lengths[j]) lengths[j] = fields[j].Length;
-                    items[i][j] = result[i].Properties[fields[j]].ToString();
-                    if (items[i][j].Length > lengths[j]) lengths[j] = items[i][j].Length;
-                }
-            }
-            return (items, lengths);
-        }
-    }
+    
 
     public abstract class Query
     {
-        /*public Dictionary<string, IGetData> stringToAction = new Dictionary<string, IGetData>
-        {
-            {"PassangerPlane",  new FromPP()}
-        };*/
-
         public abstract void Parse(string[] query, ProductLists productLists);
     }
 
-    public class Displayer : Query
+    public class Displayer : Query // WORKS FOR ALL
     {
         public override void Parse(string[] query, ProductLists productLists)
         {
@@ -170,112 +107,90 @@ namespace OOD_Proj_1
             {
                 conditions.Add(query[++ID]);
             }
-            //stringToAction[from].SelectAndRunTable(conditions, fields, productLists);
-            switch (from)
-            {
-                case "PassangerPlane":
-                    {
-                        GetData<PassengerPlane> temp = new GetData<PassengerPlane>();
-                        temp.SART(conditions, fields, productLists.passangerPlanesdict.Values.ToList());
-                        break;
-                    }
-                case "CargoPlane":
-                    {
-                        GetData<CargoPlane> temp = new GetData<CargoPlane>();
-                        temp.SART(conditions, fields, productLists.cargoPlanesdict.Values.ToList());
-                        break;
-                    }
-                case "Crew":
-                    {
-                        GetData<Crew> temp = new GetData<Crew>();
-                        temp.SART(conditions, fields, productLists.crewsdict.Values.ToList());
-                        break;
-                    }
-                case "Passenger":
-                    {
-                        GetData<Passenger> temp = new GetData<Passenger>();
-                        temp.SART(conditions, fields, productLists.passangersdict.Values.ToList());
-                        break;
-                    }
-                case "Flight":
-                    {
-                        GetData<Fligth> temp = new GetData<Fligth>();
-                        temp.SART(conditions, fields, productLists.flightsdict.Values.ToList());
-                        break;
-                    }
-                case "Cargo":
-                    {
-                        GetData<Cargo> temp = new GetData<Cargo>();
-                        temp.SART(conditions, fields, productLists.cargotsdict.Values.ToList());
-                        break;
-                    }
-                case "Airport":
-                    {
-                        GetData<Airport> temp = new GetData<Airport>();
-                        temp.SART(conditions, fields, productLists.airportsdict.Values.ToList());
-                        break;
-                    }
-                default: throw new Exception("Zła składnia komendy");
-            }
-        }
+            GetData getData = new GetData();
+            getData.GetDataAndGenerateTable(conditions, fields, productLists.getItemsWhere[from]());
 
+        }
     }
+
+
     public class Updater : Query
     {
+
         public override void Parse(string[] query, ProductLists productLists)
         {
-            throw new NotImplementedException();
+            string clname = query[1];
+            int ID = 2;
+            List<string> KVL = new List<string>();
+            while (ID < query.Length - 1 && query[++ID] != "where")
+            {
+                KVL.Add(query[ID]);
+            }
+            var items = productLists.getItemsWhere[clname]();
+            if (query[ID] == "where")
+            {
+                GetData getData = new GetData();
+                items = (getData.WhereClause(query[(ID + 1)..(query.Length)].ToList(), productLists.getItemsWhere[clname]())).ToList<Product>();
+            }
+            foreach (var item in items)
+            {
+                for (int i = 0; i < KVL.Count(); i++)
+                {
+                    var splitted = KVL[i].Split('=');
+                    item.Properties[splitted[0]] = item.Parser[splitted[0]](splitted[1]);
+                }
+            }
+
         }
     }
     public class Deleter : Query
     {
+        Dictionary<string, Action<Product, ProductLists>> GetDataAndSART = new Dictionary<string, Action<Product, ProductLists>>
+        {
+            {"PassangerPlane", (Product item, ProductLists productLists )=>
+                    productLists.passangerPlanesdict.Remove(item.ID) },
+            {"CargoPlane",  (Product item, ProductLists productLists )=>
+                    productLists.cargoPlanesdict.Remove(item.ID) },
+            {"Cargo",  (Product item, ProductLists productLists )=>
+                    productLists.cargotsdict.Remove(item.ID) },
+            {"Crew", (Product item, ProductLists productLists )=>
+                    productLists.crewsdict.Remove(item.ID) },
+            {"Airport",  (Product item, ProductLists productLists )=>
+                    productLists.airportsdict.Remove(item.ID) },
+            {"Passenger", (Product item, ProductLists productLists )=>
+                    productLists.passangersdict.Remove(item.ID) },
+            {"Flight", (Product item, ProductLists productLists )=>
+                    productLists.flightsdict.Remove(item.ID) },
+        };
         public override void Parse(string[] query, ProductLists productLists)
         {
-            throw new NotImplementedException();
+            string clname = query[1];
+            GetData getData = new GetData();
+            var items = getData.WhereClause(query[3..(query.Length)].ToList(), productLists.getItemsWhere[clname]());
+            foreach (var item in items)
+                GetDataAndSART[clname](item, productLists);
+
         }
     }
-    public class Adder : Query
+    public class Adder : Query // WORKS FOR ALL
     {
         public override void Parse(string[] query, ProductLists productLists)
         {
-            throw new NotImplementedException();
+            string clname = query[1];
+            Factory factory = new Factory();
+            int ID = 2;
+            StringBuilder sb = new StringBuilder();
+            sb.Append(clname);
+            while (++ID < query.Length)
+            {
+                sb.Append(',');
+                sb.Append(query[ID].Split('=')[1]);
+            }
+            factory.Create(sb.ToString(), productLists);
+
         }
     }
 
-    public class TableGenerator
-    {
-        public void Generate(string[] ColNames, int[] ColLengths, string[][] items)
-        {
-            StringBuilder output = new StringBuilder();
-            for (int i = 0; i < ColNames.Length; i++)
-            {
-                output.Append(String.Format(" {0, " + ColLengths[i].ToString() + "}", ColNames[i]));
-                if (i != ColNames.Length - 1) output.Append("|");
-            }
-            output.Append("\n");
-            // Empty row
-            for (int j = 0; j < ColLengths.Length; j++)
-            {
-                for (int k = 0; k <= ColLengths[j]; k++)
-                {
-                    output.Append('-');
-                }
-                if (j != ColLengths.Length - 1) output.Append("+");
-            }
-            output.Append("\n");
 
-            for (int i = 0; i < items.Length; i++)
-            {
-
-                for (int j = 0; j < items[i].Length; j++)
-                {
-                    output.Append(String.Format(" {0, " + ColLengths[j].ToString() + "}", items[i][j].ToString()));
-                    if (j != ColNames.Length - 1) output.Append("|");
-                }
-                output.Append("\n");
-            }
-            Console.Write(output.ToString());
-        }
-    }
 
 }

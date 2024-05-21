@@ -14,10 +14,10 @@ namespace OOD_Proj_1.Gui
 {
     public class Adapter : FlightsGUIData
     {
-        private Dictionary<ulong, Fligth> fligths;
+        private Dictionary<ulong, Flight> fligths;
         private Dictionary<ulong, Airport> airports;
 
-        public void UpdateFlights(Dictionary<ulong, Fligth> NewFlights)
+        public void UpdateFlights(Dictionary<ulong, Flight> NewFlights)
         {
             fligths = NewFlights;
         }

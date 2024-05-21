@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace OOD_Proj_1.Products
 {
-    abstract public class FligthWrapper : Fligth
+    abstract public class FligthWrapper : Flight
     {
-        public FligthWrapper(Fligth fligth) : base(fligth.Type, fligth.ID, fligth.OriginAsID, fligth.TargetAsID, fligth.TakeOffTime, fligth.LandingTime, fligth.Longitude, fligth.Latitude, fligth.AMSL, fligth.PlaneID, fligth.CrewAsIDs, fligth.LoadAsIDs) { }
+        public FligthWrapper(Flight fligth) : base(fligth.Type, fligth.ID, fligth.OriginAsID, fligth.TargetAsID, fligth.TakeOffTime, fligth.LandingTime, fligth.Longitude, fligth.Latitude, fligth.AMSL, fligth.PlaneID, fligth.CrewAsIDs, fligth.LoadAsIDs) { }
     }
     public class FligthPositionWrapper : FligthWrapper
     {
         private int CreationTimeSeconds;
         private double CreationLongitude;
         private double CreationLatitude;
-        public FligthPositionWrapper(Fligth fligth, float Longitude, float Latitude, float AMSL) : base(fligth)
+        public FligthPositionWrapper(Flight fligth, float Longitude, float Latitude, float AMSL) : base(fligth)
         {
             this.Latitude = Latitude;
             CreationLatitude = Latitude;

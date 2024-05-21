@@ -201,7 +201,7 @@ namespace OOD_Proj_1
     }
     class FlightGenerator : Generator
     {
-        public override Fligth Create(string[] words, ProductLists productLists)
+        public override Flight Create(string[] words, ProductLists productLists)
         {
             string type = words[0];
             ulong ID = ulong.Parse(words[1]);
@@ -215,11 +215,11 @@ namespace OOD_Proj_1
             ulong PlaneID = ulong.Parse(words[9]);
             List<ulong> CrewAsIDs = words[10].ToUInt64List();
             List<ulong> LoadAsIDs = words[11].ToUInt64List();
-            Fligth fligth = new Fligth(type, ID, OriginAsID, TargetAsID, TakeOffTime, LandingTime, Longitude, Latitude, AMSL, PlaneID, CrewAsIDs, LoadAsIDs);
+            Flight fligth = new Flight(type, ID, OriginAsID, TargetAsID, TakeOffTime, LandingTime, Longitude, Latitude, AMSL, PlaneID, CrewAsIDs, LoadAsIDs);
             productLists.flightsdict.Add(ID, fligth);
             return fligth;
         }
-        public override Fligth Create(Message message, ProductLists productLists)
+        public override Flight Create(Message message, ProductLists productLists)
         {
             ulong ID = BitConverter.ToUInt64(message.MessageBytes, 7);
             ulong OriginID = BitConverter.ToUInt64(message.MessageBytes[15..23]);
@@ -243,7 +243,7 @@ namespace OOD_Proj_1
                 temp = 59 + i * 8 + 8 * CC;
                 Load.Add(BitConverter.ToUInt64(message.MessageBytes, temp));
             }
-            Fligth fligth = new Fligth("FL", ID, OriginID, TargetID, TO, LD, 0, 0, 0, PlaneID, Crew, Load);
+            Flight fligth = new Flight("FL", ID, OriginID, TargetID, TO, LD, 0, 0, 0, PlaneID, Crew, Load);
             productLists.flightsdict.Add(ID, fligth);
             return fligth;
         }
