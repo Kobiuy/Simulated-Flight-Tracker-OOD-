@@ -1,15 +1,4 @@
-﻿using System.Data;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
-using NetworkSourceSimulator;
-using FlightTrackerGUI;
-using ExCSS;
-using Mapsui.Projections;
-using Mapsui;
-using System;
-using OOD_Proj_1.ManageData;
-using OOD_Proj_1.Products;
+﻿using OOD_Proj_1.ManageData;
 namespace OOD_Proj_1
 {
 

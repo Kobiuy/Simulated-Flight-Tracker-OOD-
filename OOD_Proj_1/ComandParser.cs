@@ -1,12 +1,7 @@
-﻿using Avalonia.Markup.Xaml.Templates;
-using NetTopologySuite.Index.HPRtree;
-using System.Collections.Generic;
-using System.Text;
-using static SkiaSharp.HarfBuzz.SKShaper;
+﻿using System.Text;
 
 namespace OOD_Proj_1
 {
-    // Kreacja komend
     public class ComandParser
     {
         public Dictionary<string, Action<string[], ProductLists>> QueriesDict = new Dictionary<string, Action<string[], ProductLists>>()
@@ -15,21 +10,15 @@ namespace OOD_Proj_1
                             { "Update",(string[] query, ProductLists productLists)=>(new Updater()).Parse(query, productLists) },
                             { "Add",(string[] query, ProductLists productLists)=>(new Adder()).Parse(query, productLists) },
                             { "Delete", (string[] query, ProductLists productLists)=>(new Deleter()).Parse(query, productLists) },
-
         };
         public void ChooseCommand(string query, ProductLists productLists)
         {
             Action<string[], ProductLists> method;
             var query_sep = query.Split(' ');
             if (QueriesDict.TryGetValue(query_sep[0], out method))
-            {
                 method(query_sep, productLists);
-            }
             else
-            {
                 Console.WriteLine($"[{query}] nie jest poprawną komendą");
-            }
-
         }
     }
 
@@ -50,26 +39,20 @@ namespace OOD_Proj_1
                     if (conditions[i - 1] == "or")
                     {
                         getDataResult = (from item in list where item.IsQueryTrue(NowQuery) select item).ToList();
-
                         for (int j = 0; j < getDataResult.Count; j++)
-                        {
                             if (!result.Contains(getDataResult[j])) result.Add(getDataResult[j]);
-                        }
                     }
                     else
-                    {
                         result = (from item in result where item.IsQueryTrue(NowQuery) select item).ToList();
-                    }
                 }
             }
             return result;
         }
-        public void GetDataAndGenerateTable(List<string> conditions, List<string> fields, List<Product> list) // Works
+        public void GetDataAndGenerateTable(List<string> conditions, List<string> fields, List<Product> list) 
         {
             if (fields[0] == "*")
-            {
                 fields = list[0].Properties.Keys.ToList();
-            }
+
             TableGenerator tableGenerator = new TableGenerator();
             var result = WhereClause(conditions, list);
             FieldsForTable fieldsForTable = new();
@@ -78,60 +61,52 @@ namespace OOD_Proj_1
         }
     }
 
-    
-
     public abstract class Query
     {
         public abstract void Parse(string[] query, ProductLists productLists);
     }
 
-    public class Displayer : Query // WORKS FOR ALL
+    public class Displayer : Query 
     {
         public override void Parse(string[] query, ProductLists productLists)
         {
-
             int ID = 0;
             string from;
             List<string> conditions = new List<string>();
             List<string> fields = new List<string>();
             while (ID < query.Length - 2 && query[++ID] != "from")
-            {
                 fields.Add(query[ID]);
-            }
             if (!(query[ID] == "from"))
                 throw new Exception("Zła składnia komendy");
 
             from = query[++ID];
             ID++;
             while (ID < query.Length - 1)
-            {
                 conditions.Add(query[++ID]);
-            }
+
             GetData getData = new GetData();
             getData.GetDataAndGenerateTable(conditions, fields, productLists.getItemsWhere[from]());
-
         }
     }
 
-
     public class Updater : Query
     {
-
         public override void Parse(string[] query, ProductLists productLists)
         {
-            string clname = query[1];
+            string class_name = query[1];
             int ID = 2;
             List<string> KVL = new List<string>();
+
             while (ID < query.Length - 1 && query[++ID] != "where")
-            {
                 KVL.Add(query[ID]);
-            }
-            var items = productLists.getItemsWhere[clname]();
+
+            var items = productLists.getItemsWhere[class_name]();
             if (query[ID] == "where")
             {
                 GetData getData = new GetData();
-                items = (getData.WhereClause(query[(ID + 1)..(query.Length)].ToList(), productLists.getItemsWhere[clname]())).ToList<Product>();
+                items = (getData.WhereClause(query[(ID + 1)..(query.Length)].ToList(), productLists.getItemsWhere[class_name]())).ToList<Product>();
             }
+
             foreach (var item in items)
             {
                 for (int i = 0; i < KVL.Count(); i++)
@@ -140,12 +115,11 @@ namespace OOD_Proj_1
                     item.Properties[splitted[0]] = item.Parser[splitted[0]](splitted[1]);
                 }
             }
-
         }
     }
     public class Deleter : Query
     {
-        Dictionary<string, Action<Product, ProductLists>> GetDataAndSART = new Dictionary<string, Action<Product, ProductLists>>
+        Dictionary<string, Action<Product, ProductLists>> RemoveItemFromAdequateDictionary = new Dictionary<string, Action<Product, ProductLists>>
         {
             {"PassangerPlane", (Product item, ProductLists productLists )=>
                     productLists.passangerPlanesdict.Remove(item.ID) },
@@ -164,33 +138,28 @@ namespace OOD_Proj_1
         };
         public override void Parse(string[] query, ProductLists productLists)
         {
-            string clname = query[1];
+            string class_name = query[1];
             GetData getData = new GetData();
-            var items = getData.WhereClause(query[3..(query.Length)].ToList(), productLists.getItemsWhere[clname]());
+            var items = getData.WhereClause(query[3..(query.Length)].ToList(), productLists.getItemsWhere[class_name]());
             foreach (var item in items)
-                GetDataAndSART[clname](item, productLists);
-
+                RemoveItemFromAdequateDictionary[class_name](item, productLists);
         }
     }
-    public class Adder : Query // WORKS FOR ALL
+    public class Adder : Query
     {
         public override void Parse(string[] query, ProductLists productLists)
         {
-            string clname = query[1];
+            string class_name = query[1];
             Factory factory = new Factory();
             int ID = 2;
             StringBuilder sb = new StringBuilder();
-            sb.Append(clname);
+            sb.Append(class_name);
             while (++ID < query.Length)
             {
                 sb.Append(',');
                 sb.Append(query[ID].Split('=')[1]);
             }
             factory.Create(sb.ToString(), productLists);
-
         }
     }
-
-
-
 }

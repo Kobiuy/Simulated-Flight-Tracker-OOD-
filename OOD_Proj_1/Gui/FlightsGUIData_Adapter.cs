@@ -1,14 +1,5 @@
-﻿using Mapsui.Projections;
-using Mapsui;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NetTopologySuite.Index.Strtree;
-using System.Collections;
-using ExCSS;
-using OOD_Proj_1.Products;
+﻿using Mapsui;
+using Mapsui.Projections;
 
 namespace OOD_Proj_1.Gui
 {

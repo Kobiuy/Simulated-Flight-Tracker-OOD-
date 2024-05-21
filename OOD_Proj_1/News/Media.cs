@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OOD_Proj_1.Products;
-
-namespace OOD_Proj_1.News
+﻿namespace OOD_Proj_1.News
 {
     public abstract class Media()
     {

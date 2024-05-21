@@ -1,11 +1,5 @@
 ﻿using Microsoft.VisualBasic;
-using OOD_Proj_1.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace OOD_Proj_1.ManageData
 {

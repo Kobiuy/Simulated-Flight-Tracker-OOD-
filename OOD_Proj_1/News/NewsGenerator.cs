@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OOD_Proj_1.Products;
+﻿using System.Collections;
 
 namespace OOD_Proj_1.News
 {
