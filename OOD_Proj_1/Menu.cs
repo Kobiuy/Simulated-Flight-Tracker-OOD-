@@ -39,13 +39,13 @@ namespace OOD_Proj_1
                         Console.WriteLine("Invalid Command");
                     }
                 }
-                }
-            }
-            public static void StopAll(ProductLists p)
-            {
-                ServerSimulator.StopServer();
-                if (GuiApp.UpdateGuiThread != null && GuiApp.UpdateGuiThread.IsAlive)
-                    Console.WriteLine("In order to fully exit application close GUI");
             }
         }
+        public static void StopAll(ProductLists p)
+        {
+            ServerSimulator.StopServer();
+            if (GuiApp.UpdateGuiThread != null && GuiApp.UpdateGuiThread.IsAlive)
+                Console.WriteLine("In order to fully exit application close GUI");
+        }
     }
+}
